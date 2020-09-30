@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from 'react-redux'
-import Folder from './folder'
+import Folder from './folderItem'
 import Typography from '@material-ui/core/Typography';
 
 const Folders = ({addFolders}) => {

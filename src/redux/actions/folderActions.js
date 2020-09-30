@@ -1,8 +1,9 @@
-import {ADD_FOLDER, } from "./types";
+import actionTypes from "../actionTypes";
 
 export function createFolder(folder) {
     return {
-        type: ADD_FOLDER,
+        type: actionTypes.ADD_FOLDER,
         payload: folder
     };
 }
+

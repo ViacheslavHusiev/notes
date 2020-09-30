@@ -1,0 +1,2 @@
+export const ADD_FOLDER = 'ADD_FOLDER'
+export const SELECT_FOLDER = 'SELECT_FOLDER'
