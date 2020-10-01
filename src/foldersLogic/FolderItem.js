@@ -6,29 +6,23 @@ import ListItemText from "@material-ui/core/ListItemText";
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
-        backgroundColor: theme.palette.background.paper,
     },
 }));
 
-export default ({folder}) => {
+const FolderItem= ({title, onItemClicked, selected}) => {
     const classes = useStyles();
-
-
-    const [selectedIndex, setSelectedIndex] = React.useState(1);
-
-    const handleListItemClick = (event, index) => {
-        setSelectedIndex(index);
-     };
 
     return (
         <ListItem
             className={classes.root}
             button
-            selected={selectedIndex === 2}
-            onClick={(event) => handleListItemClick(event, 2)}
+            role='button'
+            onClick={onItemClicked}
+            // selected={selected}
         >
-            <ListItemText primary={folder.title} />
+            <ListItemText primary={title} />
         </ListItem>
     )
 }
 
+export default FolderItem

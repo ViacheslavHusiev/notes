@@ -1,10 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import FoldersForm from "../foldersLogic/folderForm";
-import Folders from "../foldersLogic/folders";
+import InputSectionFolder from "../foldersLogic/InputSectionFolder";
+import FoldersSection from "../foldersLogic/FoldersSection";
 
-const useStyles = makeStyles((teme) => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
         height: 820,
@@ -18,12 +17,10 @@ const FirstColumn = () => {
 
     return (
         <div className={classes.root}>
-            <List component="content">
-                <div style={{height:760}}>
-                    <Folders />
-                </div>
-            </List>
-                <FoldersForm/>
+            <div style={{height:730}}>
+                <FoldersSection />
+            </div>
+            <InputSectionFolder />
         </div>
     );
 }

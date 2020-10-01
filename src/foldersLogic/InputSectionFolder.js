@@ -6,26 +6,81 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import {useDispatch, useSelector} from "react-redux";
+import folderActions from "../redux/actions/folderActions";
+import folderInputActions from "../redux/actions/folderInputActions";
+import EditIcon from '@material-ui/icons/Edit';
 
 
 
 const InputSectionFolder = () =>{
+    const id = useSelector(state => state.foldersInputReducer.id);
+    const title = useSelector(state => state.foldersInputReducer.title);
+    const open = useSelector(state => state.openDialogReducer.open)
+    const dispatch = useDispatch();
 
-            const isEnabled = this.state.title.length > 0
+    const addFolder = () => {
+        if (title){
+            dispatch(folderActions.addFolder({
+                title
+            }))
+
+            dispatch(folderInputActions.resetInputs())
+        }
+        handleClickClose()
+    }
+
+    const editFolder = () => {
+        if (title){
+            dispatch(folderActions.editFolder(id, {
+                title,
+            }))
+        }
+        dispatch(folderInputActions.resetInputs())
+        handleClickClose()
+    }
+
+    const deleteFolder = () =>{
+        dispatch(folderActions.deleteFolder(id))
+        dispatch(folderInputActions.resetInputs())
+    }
+
+    const handleClickOpen = () => {
+        dispatch(folderActions.openDialog(open))
+    };
+
+    const handleClickClose = () => {
+        dispatch(folderActions.closeDialog(open))
+    };
+
+    const isEnabled = title.length > 0
 
             return (
                 <div>
-                    <Button
-                        size="large"
-                        variant='contained'
-                        startIcon={<AddCircleOutlineIcon/>}
-                        fullWidth
-                        onClick={null}
-                        style={{background: 'white'}}
-                    >
-                        New folder
-                    </Button>
-                    <Dialog open={null} onClose={null} aria-labelledby="form-dialog-title">
+                    <div>
+                        <Button
+                            size="large"
+                            variant='contained'
+                            startIcon={id === -1 ? <AddCircleOutlineIcon/> : <EditIcon/>}
+                            fullWidth
+                            onClick={id === -1 ? handleClickOpen : handleClickOpen}
+                            style={id ===-1 ? {background: 'white'} : {background: '#b3e5fc'}}
+                        >
+                            {id === -1 ? 'NEW FOLDER' : 'EDIT FOLDER'}
+                        </Button>
+                        {id !== -1 &&
+                        <Button
+                            onClick={deleteFolder}
+                            size="large"
+                            variant='contained'
+                            fullWidth
+                            style={{background: '#f27573'}}
+                        >
+                            DELETE FOLDER
+                        </Button>
+                        }
+                    </div>
+                    <Dialog open={open} onClose={handleClickClose} aria-labelledby="form-dialog-title">
                         <DialogTitle id="form-dialog-title">Folder name</DialogTitle>
                         <DialogContent>
                             <TextField
@@ -35,17 +90,19 @@ const InputSectionFolder = () =>{
                                 name='title'
                                 label="Name"
                                 type="text"
-                                value={null}
-                                onChange={null}
+                                value={title}
+                                onChange={e =>
+                                    dispatch(folderInputActions.setInputTitle(e.target.value))
+                                }
                                 fullWidth
                             />
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={null} color="primary">
+                            <Button onClick={handleClickClose} color="primary">
                                 Cancel
                             </Button>
-                            <Button disabled={!isEnabled} onClick={null} color="primary">
-                                Create
+                            <Button  disabled={!isEnabled} onClick={id ===-1 ? addFolder : editFolder} color="primary">
+                                {id === -1 ? 'Create' : 'EDIT'}
                             </Button>
                         </DialogActions>
                     </Dialog>
