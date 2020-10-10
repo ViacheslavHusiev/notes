@@ -1,28 +1,30 @@
-import actionTypes from "../actionTypes";
+import {
+  ADD_FOLDER,
+  CLOSE_FOLDER_TITLE_DIALOG,
+  DELETE_FOLDER,
+  EDIT_FOLDER,
+  OPEN_FOLDER_TITLE_DIALOG
+} from '../actionTypes'
 
-export default {
-    addFolder:(folder) => ({
-        type: actionTypes.ADD_FOLDER,
-        folder
-    }),
-    editFolder: (index, folder) => ({
-        type: actionTypes.EDIT_FOLDER,
-        index,
-        folder
-    }),
-    deleteFolder: (index, folder) => ({
-        type: actionTypes.DELETE_FOLDER,
-        index,
-        folder
-    }),
-    openDialog: (open)=> ({
-        type: actionTypes.OPEN_FOLDER_TITLE_DIALOG,
-        open,
-    }),
-    closeDialog: (open)=> ({
-        type: actionTypes.CLOSE_FOLDER_TITLE_DIALOG,
-        open,
-    })
-}
-
-
+export const addFolder = (folder) => ({
+  type: ADD_FOLDER,
+  folder
+})
+export const editFolder = (index, folder) => ({
+  type: EDIT_FOLDER,
+  index,
+  folder
+})
+export const deleteFolder = (index, folder) => ({
+  type: DELETE_FOLDER,
+  index,
+  folder
+})
+export const openDialog = (open) => ({
+  type: OPEN_FOLDER_TITLE_DIALOG,
+  open
+})
+export const closeDialog = (open) => ({
+  type: CLOSE_FOLDER_TITLE_DIALOG,
+  open
+})
