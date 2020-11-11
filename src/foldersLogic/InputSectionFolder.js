@@ -7,20 +7,25 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 import { connect } from 'react-redux'
-import { openDialog, closeDialog, addFolder } from '../redux/actions/folderActions'
-import { setInputTitle, resetInputs } from '../redux/actions/folderInputActions'
+import {
+  openDialog,
+  closeDialog,
+  addFolder,
+  setInputTitle,
+  resetInputs,
+  editFolder
+} from '../redux/actions/folderActions'
+import PropTypes from 'prop-types'
 
 const InputSectionFolder = (props) => {
-  // eslint-disable-next-line react/prop-types
-  const { title, id, open } = props
-  // eslint-disable-next-line react/prop-types
-  const { addFolder, editFolder, deleteFolder, openDialog, closeDialog, setInputTitle, resetInputs } = props
+  const { title, open, addFolder, openDialog, closeDialog, setInputTitle, resetInputs } = props
 
-  const handleClickOpen = () => {
+  const clickOpenDialog = () => {
+    resetInputs()
     openDialog(open)
   }
 
-  const handleClickClose = () => {
+  const clickCloseDialog = () => {
     closeDialog(open)
   }
 
@@ -28,30 +33,14 @@ const InputSectionFolder = (props) => {
     if (title.trim()) {
       addFolder({
         title,
-        id: Date.now().toString()
-      })
-      resetInputs()
-    }
-    handleClickClose()
-  }
-
-  const editFold = () => {
-    if (title) {
-      editFolder(id, {
-        title
+        id: 'FOLDER-' + Date.now().toString()
       })
     }
     resetInputs()
-    handleClickClose()
-  }
-
-  const deleteFold = () => {
-    deleteFolder(id)
-    resetInputs()
+    clickCloseDialog()
   }
 
   const isEnabled = title.length > 0
-  console.log({ open })
   return (
     <div>
       <div>
@@ -60,24 +49,13 @@ const InputSectionFolder = (props) => {
           variant='contained'
           startIcon={<AddCircleOutlineIcon/>}
           fullWidth
-          onClick={handleClickOpen}
+          onClick={clickOpenDialog}
           style={{ background: 'white' }}
         >
           NEW FOLDER
         </Button>
-        {/* {id !== -1 && */}
-        {/* <Button */}
-        {/*  onClick={deleteFolder} */}
-        {/*  size="large" */}
-        {/*  variant='contained' */}
-        {/*  fullWidth */}
-        {/*  style={{ background: '#f27573' }} */}
-        {/* > */}
-        {/*  DELETE FOLDER */}
-        {/* </Button> */}
-        {/* } */}
       </div>
-      <Dialog open={open} onClose={handleClickClose} aria-labelledby="form-dialog-title">
+      <Dialog open={open} onClose={clickCloseDialog} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Folder name</DialogTitle>
         <DialogContent>
           <TextField
@@ -95,7 +73,7 @@ const InputSectionFolder = (props) => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClickClose} color="primary">
+          <Button onClick={clickCloseDialog} color="primary">
             Cancel
           </Button>
           <Button disabled={!isEnabled} onClick={addFold} color="primary">
@@ -107,12 +85,22 @@ const InputSectionFolder = (props) => {
   )
 }
 
+InputSectionFolder.propTypes = {
+  title: PropTypes.string.isRequired,
+  open: PropTypes.bool.isRequired,
+  folders: PropTypes.bool.isRequired,
+  addFolder: PropTypes.func.isRequired,
+  openDialog: PropTypes.func.isRequired,
+  closeDialog: PropTypes.func.isRequired,
+  setInputTitle: PropTypes.func.isRequired,
+  resetInputs: PropTypes.func.isRequired
+}
+
 const mapStateToProps = (state) => {
   return {
-    open: state.openDialogReducer.open,
+    open: state.foldersReducer.open,
     folders: state.foldersReducer.folders,
-    title: state.foldersInputReducer.title,
-    id: state.foldersInputReducer.id
+    title: state.foldersReducer.title
   }
 }
 
@@ -122,7 +110,8 @@ const mapDispatchToProps = (dispatch) => {
     closeDialog: open => dispatch(closeDialog(open)),
     addFolder: title => dispatch(addFolder(title)),
     resetInputs: () => dispatch(resetInputs()),
-    setInputTitle: title => dispatch(setInputTitle(title))
+    setInputTitle: title => dispatch(setInputTitle(title)),
+    editFolder: (id, title) => dispatch(editFolder(id, title))
   }
 }
 

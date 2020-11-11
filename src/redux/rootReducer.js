@@ -1,15 +1,27 @@
 import { combineReducers } from 'redux'
 import {
-  ADD_FOLDER, CLOSE_FOLDER_TITLE_DIALOG,
+  ADD_FOLDER,
+  CLOSE_EDIT_FOLDER_TITLE_DIALOG,
+  CLOSE_FOLDER_CONTEXT_MENU,
+  CLOSE_FOLDER_TITLE_DIALOG,
   DELETE_FOLDER,
-  EDIT_FOLDER, OPEN_FOLDER_TITLE_DIALOG,
+  EDIT_FOLDER,
+  OPEN_FOLDER_CONTEXT_MENU,
+  OPEN_FOLDER_TITLE_DIALOG,
+  OPEN_FOR_EDIT_FOLDER_TITLE_DIALOG,
   RESET_INPUT,
-  SET_INPUT_ID,
-  SET_INPUT_TITLE
+  SET_ACTIVE_FOLDER_ID,
+  SET_INPUT_TITLE,
 } from './actionTypes'
 
 const initialFoldersState = {
-  folders: []
+  folders: [],
+  open: false,
+  openForEdit: false,
+  mouseX: null,
+  mouseY: null,
+  title: '',
+  selectedFolderId: ''
 }
 
 export function foldersReducer (state = initialFoldersState, action) {
@@ -17,42 +29,66 @@ export function foldersReducer (state = initialFoldersState, action) {
     case ADD_FOLDER: {
       const folders = [...state.folders]
       folders.push(action.folder)
-      return [
+      return {
+        ...state,
         folders
-      ]
+      }
     }
     case DELETE_FOLDER: {
-      const { index } = action
       const folders = []
+      const selectedFolderId = state.selectedFolderId
+      const selectedFolderIndex = state.folders.findIndex(
+        folder => folder.id === selectedFolderId
+      )
       state.folders.forEach((folder, i) => {
-        if (index !== i) {
+        if (selectedFolderIndex !== i) {
           folders.push(folder)
         }
       })
       return {
+        ...state,
         folders
       }
     }
     case EDIT_FOLDER: {
-      const { index, folder } = action
       const folders = [...state.folders]
-      folders[index] = folder
+      const selectedFolderId = state.selectedFolderId
+      const selectedFolderIndex = folders.findIndex(
+        folder => folder.id === selectedFolderId
+      )
+      folders[selectedFolderIndex].title = state.title
       return {
+        ...state,
         folders
       }
     }
-    default:
-      return state
-  }
-}
-
-const initialInputFoldersState = {
-  id: '',
-  title: ''
-}
-
-export function foldersInputReducer (state = initialInputFoldersState, action) {
-  switch (action.type) {
+    case OPEN_FOLDER_TITLE_DIALOG: {
+      return { ...state, open: true }
+    }
+    case CLOSE_FOLDER_TITLE_DIALOG: {
+      return { ...state, open: false }
+    }
+    case OPEN_FOR_EDIT_FOLDER_TITLE_DIALOG: {
+      return { ...state, openForEdit: true }
+    }
+    case CLOSE_EDIT_FOLDER_TITLE_DIALOG: {
+      return { ...state, openForEdit: false, title: '' }
+    }
+    case OPEN_FOLDER_CONTEXT_MENU: {
+      const { mouseX, mouseY } = action
+      return {
+        ...state,
+        mouseX,
+        mouseY
+      }
+    }
+    case CLOSE_FOLDER_CONTEXT_MENU: {
+      return {
+        ...state,
+        mouseX: null,
+        mouseY: null
+      }
+    }
     case SET_INPUT_TITLE: {
       const { title } = action
       return {
@@ -60,32 +96,18 @@ export function foldersInputReducer (state = initialInputFoldersState, action) {
         title
       }
     }
-    case SET_INPUT_ID: {
-      const { id } = action
+    case SET_ACTIVE_FOLDER_ID: {
+      const { selectedFolderId } = action
       return {
         ...state,
-        id
+        selectedFolderId
       }
     }
     case RESET_INPUT: {
-      return initialInputFoldersState
-    }
-    default:
-      return state
-  }
-}
-
-const initialStateDialog = {
-  open: false
-}
-
-export function openDialogReducer (state = initialStateDialog, action) {
-  switch (action.type) {
-    case OPEN_FOLDER_TITLE_DIALOG: {
-      return { ...state, open: true }
-    }
-    case CLOSE_FOLDER_TITLE_DIALOG: {
-      return { ...state, open: false }
+      return {
+        ...state,
+        title: ''
+      }
     }
     default:
       return state
@@ -93,9 +115,7 @@ export function openDialogReducer (state = initialStateDialog, action) {
 }
 
 const rootReducer = combineReducers({
-  foldersReducer,
-  foldersInputReducer,
-  openDialogReducer
+  foldersReducer
 })
 
 export default rootReducer
