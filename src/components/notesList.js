@@ -1,30 +1,27 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import InputSectionFolder from '../foldersLogic/InputSectionFolder'
-import FoldersSection from '../foldersLogic/FoldersSection'
+import NotesSection from '../notes/NotesSection'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    height: '100%',
+    height: '90vh',
     backgroundColor: '#f5f5f5'
   },
   sectionStyle: {
-    height: '90%'
+    height: '100%'
   }
 }))
 
-const FoldersList = () => {
+const NotesList = () => {
   const classes = useStyles()
 
   return (
     <div className={classes.root}>
       <div className={classes.sectionStyle}>
-        <FoldersSection/>
+        <NotesSection/>
       </div>
-      <InputSectionFolder/>
     </div>
   )
 }
-
-export default FoldersList
+export default NotesList

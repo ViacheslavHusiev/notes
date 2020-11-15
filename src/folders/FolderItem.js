@@ -14,7 +14,7 @@ const FolderItem = ({ title, onItemClicked, selected, onContextMenu }) => {
   const classes = useStyles()
   let formattedTitle = title
 
-  // если больше 20-ти символов обрезать и прибавить три точки
+  // если больше 20-ти символов в названии обрезать и прибавить три точки
   if (title.length > 20) {
     formattedTitle = title.slice(0, 20) + '...'
   }

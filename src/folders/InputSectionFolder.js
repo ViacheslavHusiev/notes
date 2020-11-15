@@ -11,22 +11,22 @@ import {
   openDialog,
   closeDialog,
   addFolder,
-  setInputTitle,
+  setInputFolderTitle,
   resetInputs,
   editFolder
-} from '../redux/actions/folderActions'
+} from '../redux/actions'
 import PropTypes from 'prop-types'
 
 const InputSectionFolder = (props) => {
-  const { title, open, addFolder, openDialog, closeDialog, setInputTitle, resetInputs } = props
+  const { title, openFolderDialog, addFolder, openDialog, closeDialog, setInputFolderTitle, resetInputs } = props
 
   const clickOpenDialog = () => {
     resetInputs()
-    openDialog(open)
+    openDialog(openFolderDialog)
   }
 
   const clickCloseDialog = () => {
-    closeDialog(open)
+    closeDialog(openFolderDialog)
   }
 
   const addFold = () => {
@@ -55,7 +55,7 @@ const InputSectionFolder = (props) => {
           NEW FOLDER
         </Button>
       </div>
-      <Dialog open={open} onClose={clickCloseDialog} aria-labelledby="form-dialog-title">
+      <Dialog open={openFolderDialog} onClose={clickCloseDialog} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Folder name</DialogTitle>
         <DialogContent>
           <TextField
@@ -67,7 +67,7 @@ const InputSectionFolder = (props) => {
             type="text"
             value={title}
             onChange={e =>
-              setInputTitle(e.target.value)
+              setInputFolderTitle(e.target.value)
             }
             fullWidth
           />
@@ -87,18 +87,18 @@ const InputSectionFolder = (props) => {
 
 InputSectionFolder.propTypes = {
   title: PropTypes.string.isRequired,
-  open: PropTypes.bool.isRequired,
+  openFolderDialog: PropTypes.bool.isRequired,
   folders: PropTypes.bool.isRequired,
   addFolder: PropTypes.func.isRequired,
   openDialog: PropTypes.func.isRequired,
   closeDialog: PropTypes.func.isRequired,
-  setInputTitle: PropTypes.func.isRequired,
-  resetInputs: PropTypes.func.isRequired
+  resetInputs: PropTypes.func.isRequired,
+  setInputFolderTitle: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
   return {
-    open: state.foldersReducer.open,
+    openFolderDialog: state.foldersReducer.openFolderDialog,
     folders: state.foldersReducer.folders,
     title: state.foldersReducer.title
   }
@@ -106,11 +106,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    openDialog: open => dispatch(openDialog(open)),
-    closeDialog: open => dispatch(closeDialog(open)),
+    openDialog: openFolderDialog => dispatch(openDialog(openFolderDialog)),
+    closeDialog: openFolderDialog => dispatch(closeDialog(openFolderDialog)),
     addFolder: title => dispatch(addFolder(title)),
     resetInputs: () => dispatch(resetInputs()),
-    setInputTitle: title => dispatch(setInputTitle(title)),
+    setInputFolderTitle: title => dispatch(setInputFolderTitle(title)),
     editFolder: (id, title) => dispatch(editFolder(id, title))
   }
 }

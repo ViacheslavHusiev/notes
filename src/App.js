@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles(() => ({
   desk: {
     background: '#eeeeee',
-    height: '93vh',
+    height: '91vh',
     marginTop: 2
   },
   header: {
@@ -26,11 +26,11 @@ const App = () => {
         <Header/>
       </Grid>
       <Grid spacing={1} className={classes.desk} item container direction='row'>
-        <Grid item xs={4} lg={2}>
+        <Grid item xs={3} lg={2}>
           <FoldersList/>
         </Grid>
 
-        <Grid item xs={3} lg={3}>
+        <Grid item xs={4} lg={3}>
           <NotesList/>
         </Grid>
 
