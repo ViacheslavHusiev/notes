@@ -268,6 +268,16 @@ export function foldersReducer (state = initialFoldersState, action) {
       }
     }
     case SET_INPUT_NOTE_CONTENT: {
+      const getLongDate = jsdate => {
+        const date = dayjs(jsdate)
+        const formatString = ('D MMMM YYYY [at] H:mm A')
+        return date.format(formatString)
+      }
+      const getShortDate = jsdate => {
+        const date = dayjs(jsdate)
+        const formatString = ('D.M.YYYY H:mm A')
+        return date.format(formatString)
+      }
       const { content } = action
       const notes = [...state.notes]
       const selectedNoteId = state.selectedNoteId
@@ -275,6 +285,8 @@ export function foldersReducer (state = initialFoldersState, action) {
         note => note.id === selectedNoteId
       )
       notes[selectedNoteIndex].content = content
+      notes[selectedNoteIndex].lastEditLongDate = getLongDate()
+      notes[selectedNoteIndex].lastEditShortDate = getShortDate()
       return {
         ...state,
         content
