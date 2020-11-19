@@ -18,7 +18,10 @@ import {
   addNote,
   openEditNoteDialog,
   closeEditNoteDialog,
-  editNote, deleteNote,
+  editNote,
+  deleteNote,
+  selectNoteTitleAndDate,
+  disableEditContentMode
 } from '../redux/actions'
 import Dialog from '@material-ui/core/Dialog'
 import PropTypes from 'prop-types'
@@ -45,7 +48,8 @@ const Header = ({
   openNotesDialogState, addNote, notesTitle, setInputNoteTitle,
   resetNoteInputs, selectedNoteId, openNoteEditDialogState,
   openEditNoteDialog, closeEditNoteDialog, editNote,
-  deleteNote}) => {
+  deleteNote, selectNoteTitleAndDate, disableEditContentMode
+}) => {
   const classes = useStyles()
 
   const clickOpenDialog = () => {
@@ -64,13 +68,15 @@ const Header = ({
     closeEditNoteDialog(openNoteEditDialogState)
   }
 
-  const defeteNoteF = () => {
+  const deleteNoteF = () => {
+    disableEditContentMode()
     deleteNote()
   }
 
   const editNoteF = () => {
     editNote()
     closeEditNoteDialog(openNoteEditDialogState)
+    selectNoteTitleAndDate()
     resetNoteInputs()
   }
 
@@ -103,6 +109,8 @@ const Header = ({
   const isEnabledDialogAdd = notesTitle.length > 0
   const isEnabledEditDelete = Boolean(selectedNoteId)
   const isEnabledDialogEdit = notesTitle.length > 0
+  const onChangeAddNoteDialog = e => setInputNoteTitle(e.target.value)
+  const onChangeEditNoteDialog = e => setInputNoteTitle(e.target.value)
   return (
     <AppBar position='static'>
       <Toolbar className={classes.toolbarColor}>
@@ -110,14 +118,37 @@ const Header = ({
 
         <Grid item container xs={false} sm={4}>
           <div className={classes.buttonStyles}>
-            <Button disabled={!isEnabledEditDelete} onClick={defeteNoteF} className={classes.buttonColor} variant='contained' startIcon={<DeleteIcon/>}>Delete</Button>
-            <Button disabled={!isEnabledEditDelete} onClick={clickOpenEditDialog} className={classes.buttonColor} variant='contained' startIcon={<EditIcon/>}>Edit</Button>
-            <Button disabled={!isEnabledAdd} onClick={clickOpenDialog} className={classes.buttonColor} variant='contained' startIcon={<AddCommentIcon/>}>Add</Button>
+            <Button
+              disabled={!isEnabledEditDelete}
+              onClick={deleteNoteF}
+              className={classes.buttonColor}
+              variant='contained'
+              startIcon={<DeleteIcon/>}
+            >Delete</Button>
+            <Button
+              disabled={!isEnabledEditDelete}
+              onClick={clickOpenEditDialog}
+              className={classes.buttonColor}
+              variant='contained'
+              startIcon={<EditIcon/>}
+            >Edit</Button>
+            <Button
+              disabled={!isEnabledAdd}
+              onClick={clickOpenDialog}
+              className={classes.buttonColor}
+              variant='contained'
+              startIcon={<AddCommentIcon/>}
+            >Add</Button>
           </div>
         </Grid>
 
       </Toolbar>
-      <Dialog open={openNotesDialogState} onClose={clickCloseDialog} aria-labelledby="form-note-dialog-title">
+      {/* dialog window for adding new note */}
+      <Dialog
+        open={openNotesDialogState}
+        onClose={clickCloseDialog}
+        aria-labelledby="form-note-dialog-title"
+      >
         <DialogTitle id="form-note-dialog-title">Note name</DialogTitle>
         <DialogContent>
           <TextField
@@ -128,8 +159,10 @@ const Header = ({
             label="Name"
             type="text"
             value={notesTitle}
-            onChange={e =>
-              setInputNoteTitle(e.target.value)}
+            onChange={onChangeAddNoteDialog}
+            inputProps={{
+              maxLength: 20
+            }}
             fullWidth
           />
         </DialogContent>
@@ -137,13 +170,24 @@ const Header = ({
           <Button onClick={clickCloseDialog} color="primary">
             Cancel
           </Button>
-          <Button disabled={!isEnabledDialogAdd} onClick={addNoteF} color="primary">
+          <Button
+            disabled={!isEnabledDialogAdd}
+            onClick={addNoteF}
+            color="primary"
+          >
             Create note
           </Button>
         </DialogActions>
       </Dialog>
-      <Dialog open={openNoteEditDialogState} onClose={clickCloseEditDialog} aria-labelledby="form-note-edit-dialog-title">
-        <DialogTitle id="form-note-edit-dialog-title">Edit note name</DialogTitle>
+      {/* dialog window for editing a note */}
+      <Dialog
+        open={openNoteEditDialogState}
+        onClose={clickCloseEditDialog}
+        aria-labelledby="form-note-edit-dialog-title"
+      >
+        <DialogTitle
+          id="form-note-edit-dialog-title"
+        >Edit note name</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -153,8 +197,10 @@ const Header = ({
             label="Name"
             type="text"
             value={notesTitle}
-            onChange={e =>
-              setInputNoteTitle(e.target.value)}
+            onChange={onChangeEditNoteDialog}
+            inputProps={{
+              maxLength: 20
+            }}
             fullWidth
           />
         </DialogContent>
@@ -162,9 +208,11 @@ const Header = ({
           <Button onClick={clickCloseEditDialog} color="primary">
             Cancel
           </Button>
-          <Button disabled={!isEnabledDialogEdit} onClick={editNoteF} color="primary">
-            Edit
-          </Button>
+          <Button
+            disabled={!isEnabledDialogEdit}
+            onClick={editNoteF}
+            color="primary"
+          >Edit</Button>
         </DialogActions>
       </Dialog>
     </AppBar>
@@ -186,7 +234,9 @@ Header.propTypes = {
   closeEditNoteDialog: PropTypes.func.isRequired,
   editNote: PropTypes.func.isRequired,
   deleteNote: PropTypes.func.isRequired,
-  openNoteEditDialogState: PropTypes.bool.isRequired
+  openNoteEditDialogState: PropTypes.bool.isRequired,
+  selectNoteTitleAndDate: PropTypes.func.isRequired,
+  disableEditContentMode: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
@@ -199,18 +249,18 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    openNotesDialog: (openNotesDialogState) => dispatch(openNotesDialog(openNotesDialogState)),
-    closeNotesDialog: (openNotesDialogState) => dispatch(closeNotesDialog(openNotesDialogState)),
-    setInputNoteTitle: (notesTitle) => dispatch(setInputNoteTitle(notesTitle)),
-    addNote: (notesTitle) => dispatch(addNote(notesTitle)),
-    resetNoteInputs: () => dispatch(resetNoteInputs()),
-    openEditNoteDialog: (openNoteEditDialogState) => dispatch(openEditNoteDialog(openNoteEditDialogState)),
-    closeEditNoteDialog: (openNoteEditDialogState) => dispatch(closeEditNoteDialog(openNoteEditDialogState)),
-    editNote: () => dispatch(editNote()),
-    deleteNote: () => dispatch(deleteNote())
-  }
+const mapDispatchToProps = {
+  openNotesDialog,
+  closeNotesDialog,
+  setInputNoteTitle,
+  addNote,
+  resetNoteInputs,
+  openEditNoteDialog,
+  closeEditNoteDialog,
+  editNote,
+  deleteNote,
+  selectNoteTitleAndDate,
+  disableEditContentMode
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header)

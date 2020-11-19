@@ -19,19 +19,24 @@ const useStyles = makeStyles(() => ({
     color: 'gray',
     textAlign: 'center',
     fontSize: 16,
-    height: '5%',
     overflow: 'auto',
+    height: '5%',
     whiteSpace: 'nowrap'
   },
   quill: {
     height: '100%',
     toolbar: 'position: fixed'
+  },
+  selectedNoteContent: {
+    height: '85vh',
+    overflow: 'auto'
   }
 }))
 
 const Content = ({
   selectedNoteTitle, selectedNoteDate, content, setInputNoteContent,
-  editContentModeState }) => {
+  editContentModeState, selectedNoteId
+}) => {
   const classes = useStyles()
 
   const selectedNoteTitleHeader = () => {
@@ -41,25 +46,32 @@ const Content = ({
       )
     }
   }
-
-  return (
-    <div className={classes.root}>
-      <Typography className={classes.selectedNoteText} >
-        {selectedNoteTitleHeader()}
-      </Typography>
-      {editContentModeState === true ? <ReactQuill
-        className={classes.quill}
-        theme='snow'
-        value={content}
-        placeholder="Note content..."
-        onChange={e => setInputNoteContent(e.target.value)}
-      />
-        : <Typography className={classes.selectedNoteText} >
-          {content}
+  if (Boolean(selectedNoteId) === true) {
+    return (
+      <div className={classes.root}>
+        <Typography className={classes.selectedNoteText}>
+          {selectedNoteTitleHeader()}
         </Typography>
-      }
-    </div>
-  )
+        {editContentModeState === true
+          ? <ReactQuill
+            className={classes.quill}
+            theme='snow'
+            value={content}
+            placeholder="Note content..."
+            onChange={setInputNoteContent}
+          />
+          : <div
+            className={classes.selectedNoteContent}
+            dangerouslySetInnerHTML={{ __html: content }}
+          />
+        }
+      </div>
+    )
+  } else {
+    return (
+      <div/>
+    )
+  }
 }
 
 Content.propTypes = {
@@ -75,14 +87,13 @@ const mapStateToProps = (state) => {
     selectedNoteTitle: state.foldersReducer.selectedNoteTitle,
     selectedNoteDate: state.foldersReducer.selectedNoteDate,
     content: state.foldersReducer.content,
-    editContentModeState: state.foldersReducer.editContentModeState
+    editContentModeState: state.foldersReducer.editContentModeState,
+    selectedNoteId: state.foldersReducer.selectedNoteId
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setInputNoteContent: (content) => dispatch(setInputNoteContent(content))
-  }
+const mapDispatchToProps = {
+  setInputNoteContent
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Content)

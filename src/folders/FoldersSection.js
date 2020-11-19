@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import {
   resetInputs,
   setInputFolderTitle,
-  setActiveFolderId,
   openContextMenu,
   closeContextMenu,
   editFolder,
@@ -14,7 +13,7 @@ import {
   closeEditDialog,
   deleteFolder,
   selectFolderTitle,
-  resetActiveNoteId, disableEditContentMode,
+  disableEditContentMode
 } from '../redux/actions'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -40,11 +39,10 @@ const useStyles = makeStyles(() => ({
 }))
 
 const FoldersSection = ({
-  folders, setActiveFolderId, selectedFolderId, mouseX, deleteFolder,
-  mouseY, openContextMenu, closeContextMenu, editFolder,
-  openFolderEditDialog, openEditDialog, closeEditDialog, title, setInputFolderTitle,
-  selectFolderTitle, resetActiveNoteId, disableEditContentMode }) => {
-
+  folders, mouseX, mouseY, deleteFolder, openContextMenu, closeContextMenu,
+  editFolder, openFolderEditDialog, openEditDialog, closeEditDialog, title,
+  setInputFolderTitle, selectFolderTitle, disableEditContentMode
+}) => {
   const classes = useStyles()
   // открывает контекстное меню (edit, delete) при нажатии ПКМ
   const menuRightClick = (event) => {
@@ -61,6 +59,7 @@ const FoldersSection = ({
 
   const deleteFold = () => {
     deleteFolder()
+    disableEditContentMode()
     closeContextMenu()
   }
 
@@ -80,7 +79,9 @@ const FoldersSection = ({
     closeEditDialog(openFolderEditDialog)
     selectFolderTitle()
   }
-  // если массив папок пуст, выводит надпись
+
+  // if the folder array is empty,
+  // it shows the inscription “there are no folders yet”.
   if (folders.length === 0) {
     return (
       <div className={classes.emptyFoldersText}>
@@ -91,42 +92,32 @@ const FoldersSection = ({
 
   const isEnabled = title.length > 0
 
+  const dialogOnChange = e => setInputFolderTitle(e.target.value)
+
+  const anchorPositionFunc = (mouseY !== null && mouseX !== null)
+    ? { top: mouseY, left: mouseX }
+    : undefined
+
   return (
     <div className={classes.root}>
       <div onContextMenu={menuRightClick} >
-        {folders.map((folder) =>
-          <FolderItem
-            key = {folder.id}
-            title={folder.title}
-            selected={folder.id === selectedFolderId}
-            onItemClicked={() => {
-              resetActiveNoteId()
-              setActiveFolderId(folder.id)
-              selectFolderTitle()
-              disableEditContentMode()
-            }}
-            onContextMenu = {() => {
-              setActiveFolderId(folder.id)
-              setInputFolderTitle(folder.title)
-              selectFolderTitle()
-              disableEditContentMode()
-            }}
-          />
-        )}
+        <FolderItem/>
+        {/* right click context menu to edit and deleate folders */}
         <Menu
           open={mouseY !== null}
           onClose={menuClose}
           anchorReference="anchorPosition"
-          anchorPosition={
-            mouseY !== null && mouseX !== null
-              ? { top: mouseY, left: mouseX }
-              : undefined
-          }>
+          anchorPosition={anchorPositionFunc}>
           <MenuItem onClick={openEditDialogF}>Edit</MenuItem>
           <MenuItem onClick={deleteFold}>Delete</MenuItem>
         </Menu>
       </div>
-      <Dialog open={openFolderEditDialog} onClose={closeEditDialogF} aria-labelledby="form-dialog-title">
+      {/* dialog window for adding new folder */}
+      <Dialog
+        open={openFolderEditDialog}
+        onClose={closeEditDialogF}
+        aria-labelledby="form-dialog-title"
+      >
         <DialogTitle id="form-dialog-title">Edit folder name</DialogTitle>
         <DialogContent>
           <TextField
@@ -137,9 +128,10 @@ const FoldersSection = ({
             label="New Name"
             type="text"
             value={title}
-            onChange={e =>
-              setInputFolderTitle(e.target.value)
-            }
+            onChange={ dialogOnChange }
+            inputProps={{
+              maxLength: 20
+            }}
             fullWidth
           />
         </DialogContent>
@@ -157,30 +149,25 @@ const FoldersSection = ({
 }
 
 FoldersSection.propTypes = {
-  folders: PropTypes.object.isRequired,
-  id: PropTypes.string.isRequired,
+  folders: PropTypes.array.isRequired,
   title: PropTypes.string.isRequired,
-  setActiveFolderId: PropTypes.func.isRequired,
-  selectedFolderId: PropTypes.string.isRequired,
-  mouseX: PropTypes.number,
-  mouseY: PropTypes.number,
+  mouseX: PropTypes.number.isRequired,
+  mouseY: PropTypes.number.isRequired,
   openContextMenu: PropTypes.func.isRequired,
   closeContextMenu: PropTypes.func.isRequired,
   editFolder: PropTypes.func.isRequired,
   openFolderEditDialog: PropTypes.bool.isRequired,
   openEditDialog: PropTypes.func.isRequired,
   closeEditDialog: PropTypes.func.isRequired,
-  setInputFolderTitle: PropTypes.func.isRequired,
   deleteFolder: PropTypes.func.isRequired,
+  setInputFolderTitle: PropTypes.func.isRequired,
   selectFolderTitle: PropTypes.func.isRequired,
-  resetActiveNoteId: PropTypes.func.isRequired,
   disableEditContentMode: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
   return {
     folders: state.foldersReducer.folders,
-    selectedFolderId: state.foldersReducer.selectedFolderId,
     mouseX: state.foldersReducer.mouseX,
     mouseY: state.foldersReducer.mouseY,
     openFolderEditDialog: state.foldersReducer.openFolderEditDialog,
@@ -188,21 +175,17 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    resetInputs: () => dispatch(resetInputs()),
-    setInputFolderTitle: (title) => dispatch(setInputFolderTitle(title)),
-    setActiveFolderId: (id) => dispatch(setActiveFolderId(id)),
-    openContextMenu: (mouseY, mouseX) => dispatch(openContextMenu(mouseY, mouseX)),
-    closeContextMenu: () => dispatch(closeContextMenu()),
-    openEditDialog: openFolderEditDialog => dispatch(openEditDialog(openFolderEditDialog)),
-    closeEditDialog: openFolderEditDialog => dispatch(closeEditDialog(openFolderEditDialog)),
-    editFolder: () => dispatch(editFolder()),
-    deleteFolder: () => dispatch(deleteFolder()),
-    selectFolderTitle: () => dispatch(selectFolderTitle()),
-    resetActiveNoteId: () => dispatch(resetActiveNoteId()),
-    disableEditContentMode: () => dispatch(disableEditContentMode())
-  }
+const mapDispatchToProps = {
+  resetInputs,
+  setInputFolderTitle,
+  openContextMenu,
+  closeContextMenu,
+  openEditDialog,
+  closeEditDialog,
+  editFolder,
+  deleteFolder,
+  selectFolderTitle,
+  disableEditContentMode
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FoldersSection)

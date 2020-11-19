@@ -66,7 +66,7 @@ export function foldersReducer (state = initialFoldersState, action) {
       const folders = []
       const notes = []
       state.notes.map((note) => {
-        if (state.selectedFolderId !== note.masterFolder){
+        if (state.selectedFolderId !== note.masterFolder) {
           notes.push(note)
         }
       })
@@ -213,7 +213,6 @@ export function foldersReducer (state = initialFoldersState, action) {
       }
     }
     case EDIT_NOTE: {
-
       const getLongDate = jsdate => {
         const date = dayjs(jsdate)
         const formatString = ('D MMMM YYYY [at] H:mm A')
@@ -270,6 +269,12 @@ export function foldersReducer (state = initialFoldersState, action) {
     }
     case SET_INPUT_NOTE_CONTENT: {
       const { content } = action
+      const notes = [...state.notes]
+      const selectedNoteId = state.selectedNoteId
+      const selectedNoteIndex = notes.findIndex(
+        note => note.id === selectedNoteId
+      )
+      notes[selectedNoteIndex].content = content
       return {
         ...state,
         content

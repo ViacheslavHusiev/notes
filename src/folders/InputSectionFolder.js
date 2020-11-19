@@ -16,9 +16,19 @@ import {
   editFolder
 } from '../redux/actions'
 import PropTypes from 'prop-types'
+import { makeStyles } from '@material-ui/core/styles'
 
-const InputSectionFolder = (props) => {
-  const { title, openFolderDialog, addFolder, openDialog, closeDialog, setInputFolderTitle, resetInputs } = props
+const useStyles = makeStyles(() => ({
+  button: {
+    background: 'white'
+  }
+}))
+
+const InputSectionFolder = ({
+  title, openFolderDialog, addFolder, openDialog, closeDialog,
+  setInputFolderTitle, resetInputs
+}) => {
+  const classes = useStyles()
 
   const clickOpenDialog = () => {
     resetInputs()
@@ -32,7 +42,7 @@ const InputSectionFolder = (props) => {
   const addFold = () => {
     if (title.trim()) {
       addFolder({
-        title,
+        title: title,
         id: 'FOLDER-' + Date.now().toString()
       })
     }
@@ -40,22 +50,29 @@ const InputSectionFolder = (props) => {
     clickCloseDialog()
   }
 
+  const dialogOnChange = e => setInputFolderTitle(e.target.value)
+
   const isEnabled = title.length > 0
   return (
     <div>
       <div>
         <Button
+          className={classes.button}
           size="large"
           variant='contained'
           startIcon={<AddCircleOutlineIcon/>}
           fullWidth
           onClick={clickOpenDialog}
-          style={{ background: 'white' }}
         >
           NEW FOLDER
         </Button>
       </div>
-      <Dialog open={openFolderDialog} onClose={clickCloseDialog} aria-labelledby="form-dialog-title">
+      {/* dialog window for editing a folder */}
+      <Dialog
+        open={openFolderDialog}
+        onClose={clickCloseDialog}
+        aria-labelledby="form-dialog-title"
+      >
         <DialogTitle id="form-dialog-title">Folder name</DialogTitle>
         <DialogContent>
           <TextField
@@ -66,9 +83,10 @@ const InputSectionFolder = (props) => {
             label="Name"
             type="text"
             value={title}
-            onChange={e =>
-              setInputFolderTitle(e.target.value)
-            }
+            onChange={dialogOnChange}
+            inputProps={{
+              maxLength: 20
+            }}
             fullWidth
           />
         </DialogContent>
@@ -88,7 +106,7 @@ const InputSectionFolder = (props) => {
 InputSectionFolder.propTypes = {
   title: PropTypes.string.isRequired,
   openFolderDialog: PropTypes.bool.isRequired,
-  folders: PropTypes.bool.isRequired,
+  folders: PropTypes.array.isRequired,
   addFolder: PropTypes.func.isRequired,
   openDialog: PropTypes.func.isRequired,
   closeDialog: PropTypes.func.isRequired,
@@ -104,15 +122,13 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    openDialog: openFolderDialog => dispatch(openDialog(openFolderDialog)),
-    closeDialog: openFolderDialog => dispatch(closeDialog(openFolderDialog)),
-    addFolder: title => dispatch(addFolder(title)),
-    resetInputs: () => dispatch(resetInputs()),
-    setInputFolderTitle: title => dispatch(setInputFolderTitle(title)),
-    editFolder: (id, title) => dispatch(editFolder(id, title))
-  }
+const mapDispatchToProps = {
+  openDialog,
+  closeDialog,
+  addFolder,
+  resetInputs,
+  setInputFolderTitle,
+  editFolder
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(InputSectionFolder)

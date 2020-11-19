@@ -51,27 +51,33 @@ export const setActiveFolderId = selectedFolderId => ({
 export const resetInputs = () => ({
   type: RESET_FOLDER_INPUT
 })
+// change state to true to open dialog responsible for title of added folder
 export const openDialog = openFolderDialog => ({
   type: OPEN_FOLDER_TITLE_DIALOG,
   openFolderDialog
 })
+// change state to false to open dialog responsible for title of added folder
 export const closeDialog = openFolderDialog => ({
   type: CLOSE_FOLDER_TITLE_DIALOG,
   openFolderDialog
 })
+// change state to true to open dialog responsible for title of edited folder
 export const openEditDialog = openFolderEditDialog => ({
   type: OPEN_EDIT_FOLDER_TITLE_DIALOG,
   openFolderEditDialog
 })
+// change state to false to open dialog responsible for title of edited folder
 export const closeEditDialog = openFolderEditDialog => ({
   type: CLOSE_EDIT_FOLDER_TITLE_DIALOG,
   openFolderEditDialog
 })
+// specifies coordinates and open right click menu
 export const openContextMenu = (mouseX, mouseY) => ({
   type: OPEN_FOLDER_CONTEXT_MENU,
-  mouseX: mouseX,
-  mouseY: mouseY
+  mouseX,
+  mouseY
 })
+// reset coordinates and close right click menu
 export const closeContextMenu = (mouseX, mouseY) => ({
   type: CLOSE_FOLDER_CONTEXT_MENU,
   mouseX,
@@ -84,10 +90,12 @@ export const addNote = (note) => ({
   type: ADD_NOTE,
   note
 })
+// change state to true to open dialog responsible for title of added note
 export const openNotesDialog = openNotesDialogState => ({
   type: OPEN_NOTES_TITLE_DIALOG,
   openNotesDialogState
 })
+// change state to false to open dialog responsible for title of added note
 export const closeNotesDialog = openNotesDialogState => ({
   type: CLOSE_NOTES_TITLE_DIALOG,
   openNotesDialogState
@@ -112,14 +120,17 @@ export const editNote = () => ({
 export const deleteNote = () => ({
   type: DELETE_NOTE
 })
+// change state to true to open dialog responsible for title of edited note
 export const openEditNoteDialog = openNoteEditDialogState => ({
   type: OPEN_EDIT_NOTE_TITLE_DIALOG,
   openNoteEditDialogState
 })
+// change state to false to open dialog responsible for title of edited note
 export const closeEditNoteDialog = openNoteEditDialogState => ({
   type: CLOSE_EDIT_NOTE_TITLE_DIALOG,
   openNoteEditDialogState
 })
+// required to show the React Quill component to edit the note
 export const enableEditContentMode = (editContentModeState) => ({
   type: ENABLE_EDIT_CONTENT_MODE,
   editContentModeState

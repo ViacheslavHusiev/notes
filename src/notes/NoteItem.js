@@ -6,16 +6,20 @@ import ListItemText from '@material-ui/core/ListItemText'
 import PropTypes from 'prop-types'
 import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
+import {
+  disableEditContentMode,
+  enableEditContentMode,
+  selectedNoteContent,
+  selectNoteTitleAndDate,
+  setActiveNoteId
+} from '../redux/actions'
+import { connect } from 'react-redux'
 
 const useStyles = makeStyles(() => ({
-  root: {
-    width: '100%'
-  },
   list: {
     width: '100%'
   },
   noteTitleStyle: {
-    width: '100%',
     textAlign: 'center'
   },
   dateStyle: {
@@ -23,41 +27,94 @@ const useStyles = makeStyles(() => ({
     color: 'gray',
     textAlign: 'center',
     fontSize: 14
+  },
+  notes: {
+    width: '100%',
+    height: '95%',
+    overflow: 'auto'
   }
 }))
 
 const NoteItem = ({
-  noteTitle, onItemClicked, selected, shortTime, onDoubleClick }) => {
+  notes, selectedFolderId, selectedNoteId, setActiveNoteId,
+  selectNoteTitleAndDate, selectedNoteContent, disableEditContentMode,
+  enableEditContentMode
+}) => {
   const classes = useStyles()
 
   return (
-    <div className={classes.root}>
-      <List component="content" aria-label="secondary mailbox folder" direction='row'>
-        <ListItem
-          button
-          selected={selected}
-          onClick={onItemClicked}
-          onDoubleClick={onDoubleClick}
-        >
-          <div className={classes.list} direction='row'>
-            <ListItemText className={classes.noteTitleStyle} container primary={noteTitle}/>
-            <Divider className={classes.list} />
-            <Typography className={classes.dateStyle} container>
-              {shortTime}
-            </Typography>
-          </div>
-        </ListItem>
-      </List>
+    <div className={classes.notes}>
+      {notes.map((note) => {
+        const onClick = () => {
+          setActiveNoteId(note.id)
+          selectNoteTitleAndDate()
+          selectedNoteContent()
+          disableEditContentMode()
+        }
+
+        const onDoubleClick = () => {
+          setActiveNoteId(note.id)
+          selectNoteTitleAndDate()
+          selectedNoteContent()
+          enableEditContentMode()
+        }
+
+        if (selectedFolderId === note.masterFolder) {
+          return (
+            <List
+              component="content"
+              aria-label="secondary mailbox folder"
+              direction='row'
+            >
+              <ListItem
+                button
+                selected={note.id === selectedNoteId}
+                onClick={onClick}
+                onDoubleClick={onDoubleClick}
+              >
+                <div className={classes.list}>
+                  <ListItemText className={classes.noteTitleStyle} container
+                    primary={note.title}/>
+                  <Divider className={classes.list}/>
+                  <Typography className={classes.dateStyle} container>
+                    {`Last change: ${note.lastEditShortDate}`}
+                  </Typography>
+                </div>
+              </ListItem>
+            </List>
+          )
+        }
+      })}
     </div>
   )
 }
 
 NoteItem.propTypes = {
-  onItemClicked: PropTypes.func.isRequired,
-  onDoubleClick: PropTypes.func.isRequired,
-  selected: PropTypes.bool.isRequired,
-  noteTitle: PropTypes.string.isRequired,
-  shortTime: PropTypes.string.isRequired
+  notes: PropTypes.array.isRequired,
+  selectedFolderId: PropTypes.string.isRequired,
+  selectedNoteId: PropTypes.string.isRequired,
+  selectedNoteContent: PropTypes.func.isRequired,
+  setActiveNoteId: PropTypes.func.isRequired,
+  selectNoteTitleAndDate: PropTypes.func.isRequired,
+  disableEditContentMode: PropTypes.func.isRequired,
+  enableEditContentMode: PropTypes.func.isRequired
 }
 
-export default NoteItem
+const mapStateToProps = (state) => {
+  return {
+    selectedFolderTitle: state.foldersReducer.selectedFolderTitle,
+    notes: state.foldersReducer.notes,
+    selectedNoteId: state.foldersReducer.selectedNoteId,
+    selectedFolderId: state.foldersReducer.selectedFolderId
+  }
+}
+
+const mapDispatchToProps = {
+  setActiveNoteId,
+  selectNoteTitleAndDate,
+  enableEditContentMode,
+  disableEditContentMode,
+  selectedNoteContent
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NoteItem)

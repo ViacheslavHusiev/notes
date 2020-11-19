@@ -3,12 +3,6 @@ import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import NoteItem from './NoteItem'
-import {
-  enableEditContentMode,
-  selectNoteTitleAndDate,
-  setActiveNoteId,
-  disableEditContentMode, selectedNoteContent,
-} from '../redux/actions'
 import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles(() => ({
@@ -35,10 +29,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const NotesSection = ({
-  selectedFolderTitle, notes, selectedNoteId, selectedFolderId,
-  setActiveNoteId, selectNoteTitleAndDate, enableEditContentMode,
-  disableEditContentMode, selectedNoteContent }) => {
+const NotesSection = ({ selectedFolderTitle }) => {
   const classes = useStyles()
 
   const selectedFolderTitleHeader = () => {
@@ -57,64 +48,20 @@ const NotesSection = ({
         </Typography>
       </div>
       <div className={classes.notes}>
-        {notes.map((note) => {
-          if (selectedFolderId === note.masterFolder) {
-            return (
-              <NoteItem
-                key={note.id}
-                noteTitle={note.title}
-                shortTime={`Last change: ${note.lastEditShortDate}`}
-                selected={note.id === selectedNoteId}
-                onItemClicked={() => {
-                  setActiveNoteId(note.id)
-                  selectNoteTitleAndDate()
-                  selectedNoteContent()
-                  disableEditContentMode()
-                }}
-                onDoubleClick = {() => {
-                  setActiveNoteId(note.id)
-                  selectNoteTitleAndDate()
-                  selectedNoteContent()
-                  enableEditContentMode()
-                }}
-              />
-            )
-          }
-        })}
+        <NoteItem />
       </div>
     </div>
   )
 }
 
 NotesSection.propTypes = {
-  notes: PropTypes.object.isRequired,
-  selectedFolderTitle: PropTypes.string.isRequired,
-  selectedNoteId: PropTypes.string.isRequired,
-  selectedFolderId: PropTypes.string.isRequired,
-  setActiveNoteId: PropTypes.func.isRequired,
-  selectNoteTitleAndDate: PropTypes.func.isRequired,
-  enableEditContentMode: PropTypes.func.isRequired,
-  disableEditContentMode: PropTypes.func.isRequired,
-  selectedNoteContent: PropTypes.func.isRequired
+  selectedFolderTitle: PropTypes.string.isRequired
 }
 
 const mapStateToProps = (state) => {
   return {
-    selectedFolderTitle: state.foldersReducer.selectedFolderTitle,
-    notes: state.foldersReducer.notes,
-    selectedNoteId: state.foldersReducer.selectedNoteId,
-    selectedFolderId: state.foldersReducer.selectedFolderId
+    selectedFolderTitle: state.foldersReducer.selectedFolderTitle
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setActiveNoteId: (id) => dispatch(setActiveNoteId(id)),
-    selectNoteTitleAndDate: () => dispatch(selectNoteTitleAndDate()),
-    enableEditContentMode: () => dispatch(enableEditContentMode()),
-    disableEditContentMode: () => dispatch(disableEditContentMode()),
-    selectedNoteContent: () => dispatch(selectedNoteContent())
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NotesSection)
+export default connect(mapStateToProps, null)(NotesSection)

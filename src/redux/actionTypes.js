@@ -7,13 +7,12 @@ export const SET_ACTIVE_FOLDER_ID = 'SET_ACTIVE_FOLDER_ID'
 export const RESET_FOLDER_INPUT = 'RESET_FOLDER_INPUT'
 export const SELECTED_FOLDER_TITLE = 'SELECTED_FOLDER_TITLE'
 
-// открытие и закрытие диалогового окна для создания названия папки
 export const OPEN_FOLDER_TITLE_DIALOG = 'OPEN_FOLDER_TITLE_DIALOG'
 export const CLOSE_FOLDER_TITLE_DIALOG = 'CLOSE_FOLDER_TITLE_DIALOG'
-// открытие и закрытие диологового окна для редактирования названия папки
+
 export const OPEN_EDIT_FOLDER_TITLE_DIALOG = 'OPEN_EDIT_FOLDER_TITLE_DIALOG'
 export const CLOSE_EDIT_FOLDER_TITLE_DIALOG = 'CLOSE_EDIT_FOLDER_TITLE_DIALOG'
-// открытие и закрытие контекстного меню при нажатии ПКМ
+
 export const OPEN_FOLDER_CONTEXT_MENU = 'OPEN_FOLDER_CONTEXT_MENU'
 export const CLOSE_FOLDER_CONTEXT_MENU = 'CLOSE_FOLDER_CONTEXT_MENU'
 
