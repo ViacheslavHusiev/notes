@@ -5,12 +5,15 @@ import FoldersSection from '../folders/FoldersSection'
 
 const useStyles = makeStyles(() => ({
   root: {
-    width: '100%',
-    height: '90vh',
-    backgroundColor: '#f5f5f5'
+    backgroundColor: '#f5f5f5',
+    height: '94vh',
+    display: 'flex',
+    flexDirection: 'column',
+    overflow: 'auto'
   },
-  sectionStyle: {
-    height: '82vh'
+  folderSection: {
+    overflow: 'auto',
+    flex: '1 0 auto'
   }
 }))
 
@@ -18,11 +21,13 @@ const FoldersList = () => {
   const classes = useStyles()
 
   return (
-    <div className={classes.root}>
-      <div className={classes.sectionStyle}>
-        <FoldersSection/>
+    <div className='col-xs-4'>
+      <div className={classes.root}>
+        <div className={classes.folderSection}>
+          <FoldersSection/>
+        </div>
+        <InputSectionFolder/>
       </div>
-      <InputSectionFolder/>
     </div>
   )
 }

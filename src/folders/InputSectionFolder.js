@@ -19,8 +19,12 @@ import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(() => ({
+  inputSection: {
+    paddingBottom: 10
+  },
   button: {
-    background: 'white'
+    background: 'white',
+    fontSize: 14
   }
 }))
 
@@ -38,7 +42,7 @@ const InputSectionFolder = ({
   const clickCloseDialog = () => {
     closeDialog(openFolderDialog)
   }
-
+  //переп
   const addFold = () => {
     if (title.trim()) {
       addFolder({
@@ -54,7 +58,7 @@ const InputSectionFolder = ({
 
   const isEnabled = title.length > 0
   return (
-    <div>
+    <div className={classes.inputSection}>
       <div>
         <Button
           className={classes.button}

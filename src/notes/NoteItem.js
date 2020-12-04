@@ -16,22 +16,17 @@ import {
 import { connect } from 'react-redux'
 
 const useStyles = makeStyles(() => ({
-  list: {
-    width: '100%'
-  },
   noteTitleStyle: {
-    textAlign: 'center'
+    textAlign: 'flex-start'
   },
   dateStyle: {
     width: '100%',
     color: 'gray',
     textAlign: 'center',
-    fontSize: 14
+    fontSize: 12
   },
-  notes: {
-    width: '100%',
-    height: '95%',
-    overflow: 'auto'
+  listItemText: {
+    fontSize: 14
   }
 }))
 
@@ -73,11 +68,16 @@ const NoteItem = ({
                 onDoubleClick={onDoubleClick}
               >
                 <div className={classes.list}>
-                  <ListItemText className={classes.noteTitleStyle} container
-                    primary={note.title}/>
-                  <Divider className={classes.list}/>
+                  <ListItemText
+                    className={classes.noteTitleStyle}
+                    classes={{
+                      primary: classes.listItemText
+                    }}
+                    container
+                    primary={note.title}
+                  />
                   <Typography className={classes.dateStyle} container>
-                    {`Last change: ${note.lastEditShortDate}`}
+                    {`${note.lastEditShortDate}`}
                   </Typography>
                 </div>
               </ListItem>

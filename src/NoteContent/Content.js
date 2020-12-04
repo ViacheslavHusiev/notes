@@ -10,26 +10,31 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 const useStyles = makeStyles(() => ({
-  root: {
-    width: '100%',
-    height: '85%'
-  },
   selectedNoteText: {
-    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    overflow: 'auto',
+    whiteSpace: 'wrap'
+  },
+  selectedNoteTitle: {
+    color: 'black',
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginLeft: '5px',
+    marginRight: '5px'
+  },
+  selectedNoteDate: {
     color: 'gray',
     textAlign: 'center',
-    fontSize: 16,
-    overflow: 'auto',
-    height: '5%',
-    whiteSpace: 'nowrap'
+    fontSize: 14
   },
   quill: {
-    height: '100%',
-    toolbar: 'position: fixed'
+    height: '78vh',
+    toolbar: 'position: fixed;'
   },
   selectedNoteContent: {
-    height: '85vh',
-    overflow: 'auto'
+    height: '86vh'
   }
 }))
 
@@ -40,18 +45,23 @@ const Content = ({
   const classes = useStyles()
 
   const selectedNoteTitleHeader = () => {
-    if (Boolean(selectedNoteTitle) === true) {
+    if (!!selectedNoteTitle === true) {
       return (
-        `Note: ${selectedNoteTitle} (${selectedNoteDate})`
+        <div className={classes.selectedNoteText}>
+          <Typography className={classes.selectedNoteDate}>
+            {selectedNoteDate}
+          </Typography>
+          <Typography className={classes.selectedNoteTitle}>
+            {selectedNoteTitle}
+          </Typography>
+        </div>
       )
     }
   }
-  if (Boolean(selectedNoteId) === true) {
+  if (!!selectedNoteId === true) {
     return (
-      <div className={classes.root}>
-        <Typography className={classes.selectedNoteText}>
-          {selectedNoteTitleHeader()}
-        </Typography>
+      <div>
+        {selectedNoteTitleHeader()}
         {editContentModeState === true
           ? <ReactQuill
             className={classes.quill}
@@ -67,11 +77,11 @@ const Content = ({
         }
       </div>
     )
-  } else {
-    return (
-      <div/>
-    )
   }
+
+  return (
+    <div/>
+  )
 }
 
 Content.propTypes = {
@@ -79,7 +89,8 @@ Content.propTypes = {
   selectedNoteTitle: PropTypes.string.isRequired,
   selectedNoteDate: PropTypes.string.isRequired,
   setInputNoteContent: PropTypes.func.isRequired,
-  editContentModeState: PropTypes.bool.isRequired
+  editContentModeState: PropTypes.bool.isRequired,
+  selectedNoteId: PropTypes.string.isRequired
 }
 
 const mapStateToProps = (state) => {

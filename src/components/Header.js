@@ -1,5 +1,4 @@
 import React from 'react'
-import { AppBar, Toolbar, Grid } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
 import DeleteIcon from '@material-ui/icons/Delete'
@@ -28,6 +27,14 @@ import PropTypes from 'prop-types'
 import dayjs from 'dayjs'
 
 const useStyles = makeStyles((theme) => ({
+  appBarStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+    height: '6vh',
+    justifyContent: 'center',
+    alignItems: 'center',
+    background: 'linear-gradient(#f5f5f5, #e0e0e0);'
+  },
   buttonStyles: {
     display: 'flex',
     '& > *': {
@@ -37,9 +44,13 @@ const useStyles = makeStyles((theme) => ({
   buttonColor: {
     background: 'white'
   },
+  buttonSize: {
+    width: 20,
+    display: 'flex',
+    justifyContent: 'center'
+  },
   toolbarColor: {
-    background: 'linear-gradient(#f5f5f5, #e0e0e0);',
-    height: '7vh'
+    background: 'linear-gradient(#f5f5f5, #e0e0e0);'
   }
 }))
 
@@ -105,44 +116,43 @@ const Header = ({
     clickCloseDialog()
   }
 
-  const isEnabledAdd = Boolean(selectedFolderId)
+  const isEnabledAdd = !!selectedFolderId
   const isEnabledDialogAdd = notesTitle.length > 0
-  const isEnabledEditDelete = Boolean(selectedNoteId)
+  const isEnabledEditDelete = !!selectedNoteId
   const isEnabledDialogEdit = notesTitle.length > 0
   const onChangeAddNoteDialog = e => setInputNoteTitle(e.target.value)
   const onChangeEditNoteDialog = e => setInputNoteTitle(e.target.value)
+
   return (
-    <AppBar position='static'>
-      <Toolbar className={classes.toolbarColor}>
-        <Grid item xs={false} sm={3}/>
-
-        <Grid item container xs={false} sm={4}>
-          <div className={classes.buttonStyles}>
-            <Button
-              disabled={!isEnabledEditDelete}
-              onClick={deleteNoteF}
-              className={classes.buttonColor}
-              variant='contained'
-              startIcon={<DeleteIcon/>}
-            >Delete</Button>
-            <Button
-              disabled={!isEnabledEditDelete}
-              onClick={clickOpenEditDialog}
-              className={classes.buttonColor}
-              variant='contained'
-              startIcon={<EditIcon/>}
-            >Edit</Button>
-            <Button
-              disabled={!isEnabledAdd}
-              onClick={clickOpenDialog}
-              className={classes.buttonColor}
-              variant='contained'
-              startIcon={<AddCommentIcon/>}
-            >Add</Button>
-          </div>
-        </Grid>
-
-      </Toolbar>
+    <div className={classes.appBarStyle}>
+      <div className={classes.toolbarColor}>
+        <div className={classes.buttonStyles}>
+          <Button
+            disabled={!isEnabledEditDelete}
+            onClick={deleteNoteF}
+            className={classes.buttonColor}
+            variant='contained'
+            startIcon={<DeleteIcon/>}
+            size='small'
+          />
+          <Button
+            disabled={!isEnabledEditDelete}
+            onClick={clickOpenEditDialog}
+            className={classes.buttonColor}
+            variant='contained'
+            startIcon={<EditIcon/>}
+            size='small'
+          />
+          <Button
+            disabled={!isEnabledAdd}
+            onClick={clickOpenDialog}
+            className={classes.buttonColor}
+            variant='contained'
+            startIcon={<AddCommentIcon/>}
+            size='small'
+          />
+        </div>
+      </div>
       {/* dialog window for adding new note */}
       <Dialog
         open={openNotesDialogState}
@@ -215,7 +225,7 @@ const Header = ({
           >Edit</Button>
         </DialogActions>
       </Dialog>
-    </AppBar>
+    </div>
   )
 }
 

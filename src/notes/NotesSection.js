@@ -6,26 +6,19 @@ import NoteItem from './NoteItem'
 import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles(() => ({
-  root: {
-    width: '100%',
-    height: '100%'
-  },
   notes: {
     width: '100%',
-    height: '95%',
-    overflow: 'auto'
+    height: '95%'
   },
   selectedFolderText: {
     width: '100%',
-    color: 'gray',
+    color: 'Black',
     textAlign: 'center',
-    fontSize: 18
+    fontSize: 20,
+    fontWeight: 'bold'
   },
   selectedFolder: {
-    width: '100%',
-    height: '5%',
-    overflow: 'auto',
-    whiteSpace: 'nowrap'
+    width: '100%'
   }
 }))
 
@@ -33,18 +26,18 @@ const NotesSection = ({ selectedFolderTitle }) => {
   const classes = useStyles()
 
   const selectedFolderTitleHeader = () => {
-    if (Boolean(selectedFolderTitle) === true) {
+    if (!!selectedFolderTitle === true) {
       return (
-        `Folder: ${selectedFolderTitle}`
+        `${selectedFolderTitle}`
       )
     }
   }
 
   return (
-    <div className={classes.root}>
+    <div>
       <div className={classes.selectedFolder}>
         <Typography className={classes.selectedFolderText} >
-          {selectedFolderTitleHeader()}
+          <span>{selectedFolderTitleHeader()}</span>
         </Typography>
       </div>
       <div className={classes.notes}>

@@ -1,19 +1,30 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
 import Header from './components/Header'
 import FoldersList from './components/foldersList'
 import NotesList from './components/notesList'
 import NotesContent from './components/notesContent'
 import { makeStyles } from '@material-ui/core/styles'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const useStyles = makeStyles(() => ({
-  desk: {
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: 0,
+    padding: 0,
     background: '#eeeeee',
-    height: '91vh',
-    marginTop: 2
+    ['@media (max-width: 768px)']: { // eslint-disable-line no-useless-computed-key
+      minWidth: '320px'
+    }
   },
-  header: {
-    height: '7vh'
+  desk: {
+    height: '94vh',
+    margin: 0,
+    padding: 0
+  },
+  container: {
+    margin: 0,
+    padding: 0
   }
 }))
 
@@ -21,24 +32,18 @@ const App = () => {
   const classes = useStyles()
 
   return (
-    <Grid container direction='column'>
-      <Grid className={classes.header} item>
-        <Header/>
-      </Grid>
-      <Grid spacing={1} className={classes.desk} item container direction='row'>
-        <Grid item xs={3} lg={2}>
-          <FoldersList/>
-        </Grid>
-
-        <Grid item xs={4} lg={3}>
-          <NotesList/>
-        </Grid>
-
-        <Grid item xs={5} lg={7}>
-          <NotesContent/>
-        </Grid>
-      </Grid>
-    </Grid>
+    <div className={classes.root}>
+      <Header/>
+      <div className={`${classes.container} container-fluid`}>
+        <div className={classes.desk}>
+          <div className='row row-no-gutters'>
+            <FoldersList/>
+            <NotesList/>
+            <NotesContent/>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 

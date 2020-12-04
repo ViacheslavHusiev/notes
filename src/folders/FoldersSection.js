@@ -25,16 +25,12 @@ import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 
 const useStyles = makeStyles(() => ({
-  root: {
-    width: '100%',
-    height: '100%',
-    overflow: 'auto'
-  },
   emptyFoldersText: {
-    paddingTop: '5%',
+    paddingTop: 10,
     color: 'gray',
     textAlign: 'center',
-    fontSize: 22
+    fontSize: 22,
+    flex: '1 0 auto'
   }
 }))
 
@@ -81,11 +77,11 @@ const FoldersSection = ({
   }
 
   // if the folder array is empty,
-  // it shows the inscription “there are no folders yet”.
+  // it shows the inscription “ no folders”.
   if (folders.length === 0) {
     return (
       <div className={classes.emptyFoldersText}>
-        <p>There is no folders yet.</p>
+        <p>No folders...</p>
       </div>
     )
   }
@@ -99,7 +95,7 @@ const FoldersSection = ({
     : undefined
 
   return (
-    <div className={classes.root}>
+    <div>
       <div onContextMenu={menuRightClick} >
         <FolderItem/>
         {/* right click context menu to edit and deleate folders */}

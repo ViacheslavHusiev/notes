@@ -43,8 +43,10 @@ const initialFoldersState = {
   title: '',
   notesTitle: '',
   selectedFolderId: '',
+  //
   selectedFolderTitle: '',
   selectedNoteId: '',
+  //
   selectedNoteTitle: '',
   selectedNoteDate: '',
   mouseX: null,
@@ -65,7 +67,8 @@ export function foldersReducer (state = initialFoldersState, action) {
     case DELETE_FOLDER: {
       const folders = []
       const notes = []
-      state.notes.map((note) => {
+      // переписать со splice
+      state.notes.forEach((note) => {
         if (state.selectedFolderId !== note.masterFolder) {
           notes.push(note)
         }

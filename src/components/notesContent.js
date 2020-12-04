@@ -4,9 +4,11 @@ import Content from '../NoteContent/Content'
 
 const useStyles = makeStyles(() => ({
   root: {
-    width: '100%',
-    height: '90vh',
-    backgroundColor: '#f5f5f5'
+    backgroundColor: '#f5f5f5',
+    flexDirection: 'column',
+    display: 'flex',
+    height: '94vh',
+    overflow: 'auto'
   }
 }))
 
@@ -14,8 +16,10 @@ const NotesContent = () => {
   const classes = useStyles()
 
   return (
-    <div className={classes.root}>
-      <Content/>
+    <div className='col-xs-4'>
+      <div className={classes.root}>
+        <Content/>
+      </div>
     </div>
   )
 }

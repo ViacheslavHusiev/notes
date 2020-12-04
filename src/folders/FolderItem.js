@@ -14,7 +14,8 @@ import { connect } from 'react-redux'
 
 const useStyles = makeStyles(() => ({
   listItem: {
-    width: '100%'
+    width: '100%',
+    fontSize: 60
   }
 }))
 
@@ -50,7 +51,9 @@ const FolderItem = ({
             selected={folder.id === selectedFolderId}
             onContextMenu={onContextClick}
           >
-            <ListItemText primary={folder.title}/>
+            <ListItemText classes={{
+              primary: classes.listItem
+            }} primary={folder.title}/>
           </ListItem>
         )
       })}
