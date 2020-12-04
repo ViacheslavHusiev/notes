@@ -30,11 +30,11 @@ const useStyles = makeStyles(() => ({
     fontSize: 14
   },
   quill: {
-    height: '78vh',
+    height: '82vh',
     toolbar: 'position: fixed;'
   },
   selectedNoteContent: {
-    height: '86vh'
+    marginLeft: '10px'
   }
 }))
 
@@ -58,7 +58,8 @@ const Content = ({
       )
     }
   }
-  if (!!selectedNoteId === true) {
+
+  if (selectedNoteId) {
     return (
       <div>
         {selectedNoteTitleHeader()}

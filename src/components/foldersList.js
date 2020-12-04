@@ -9,7 +9,9 @@ const useStyles = makeStyles(() => ({
     height: '94vh',
     display: 'flex',
     flexDirection: 'column',
-    overflow: 'auto'
+    overflow: 'auto',
+    flex: '1 0 auto',
+    maxWidth: '200px'
   },
   folderSection: {
     overflow: 'auto',
@@ -21,13 +23,11 @@ const FoldersList = () => {
   const classes = useStyles()
 
   return (
-    <div className='col-xs-4'>
-      <div className={classes.root}>
-        <div className={classes.folderSection}>
-          <FoldersSection/>
-        </div>
-        <InputSectionFolder/>
+    <div className={classes.root}>
+      <div className={classes.folderSection}>
+        <FoldersSection/>
       </div>
+      <InputSectionFolder/>
     </div>
   )
 }

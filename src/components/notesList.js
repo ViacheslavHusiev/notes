@@ -10,7 +10,9 @@ const useStyles = makeStyles(() => ({
     height: '94vh',
     marginLeft: 2,
     marginRight: 2,
-    overflow: 'auto'
+    overflow: 'auto',
+    flex: '1 0 auto',
+    maxWidth: '300px'
   }
 }))
 
@@ -18,10 +20,8 @@ const NotesList = () => {
   const classes = useStyles()
 
   return (
-    <div className='col-xs-4'>
-      <div className={classes.root}>
-        <NotesSection/>
-      </div>
+    <div className={classes.root}>
+      <NotesSection/>
     </div>
   )
 }

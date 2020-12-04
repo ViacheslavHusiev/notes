@@ -8,7 +8,8 @@ const useStyles = makeStyles(() => ({
     flexDirection: 'column',
     display: 'flex',
     height: '94vh',
-    overflow: 'auto'
+    overflow: 'auto',
+    flex: '1 0 auto'
   }
 }))
 
@@ -16,10 +17,8 @@ const NotesContent = () => {
   const classes = useStyles()
 
   return (
-    <div className='col-xs-4'>
-      <div className={classes.root}>
-        <Content/>
-      </div>
+    <div className={classes.root}>
+      <Content/>
     </div>
   )
 }

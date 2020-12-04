@@ -9,6 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import TextField from '@material-ui/core/TextField'
 import DialogActions from '@material-ui/core/DialogActions'
+import NotesIcon from '@material-ui/icons/Notes'
 import {
   openNotesDialog,
   closeNotesDialog,
@@ -20,7 +21,9 @@ import {
   editNote,
   deleteNote,
   selectNoteTitleAndDate,
-  disableEditContentMode
+  disableEditContentMode,
+  enableEditContentMode,
+  selectedNoteContent
 } from '../redux/actions'
 import Dialog from '@material-ui/core/Dialog'
 import PropTypes from 'prop-types'
@@ -33,24 +36,15 @@ const useStyles = makeStyles((theme) => ({
     height: '6vh',
     justifyContent: 'center',
     alignItems: 'center',
-    background: 'linear-gradient(#f5f5f5, #e0e0e0);'
-  },
-  buttonStyles: {
-    display: 'flex',
-    '& > *': {
-      margin: theme.spacing(1)
+    background: 'linear-gradient(#f5f5f5, #e0e0e0);',
+    '@media (max-width: 768px)': { // eslint-disable-line no-useless-computed-key
+      minHeight: '30px'
     }
   },
-  buttonColor: {
-    background: 'white'
-  },
-  buttonSize: {
-    width: 20,
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  toolbarColor: {
-    background: 'linear-gradient(#f5f5f5, #e0e0e0);'
+  buttonStyle: {
+    background: 'white',
+    marginLeft: 5,
+    marginRight: 5
   }
 }))
 
@@ -59,7 +53,8 @@ const Header = ({
   openNotesDialogState, addNote, notesTitle, setInputNoteTitle,
   resetNoteInputs, selectedNoteId, openNoteEditDialogState,
   openEditNoteDialog, closeEditNoteDialog, editNote,
-  deleteNote, selectNoteTitleAndDate, disableEditContentMode
+  deleteNote, selectNoteTitleAndDate, disableEditContentMode,
+  selectedNoteContent, enableEditContentMode
 }) => {
   const classes = useStyles()
 
@@ -89,6 +84,11 @@ const Header = ({
     closeEditNoteDialog(openNoteEditDialogState)
     selectNoteTitleAndDate()
     resetNoteInputs()
+  }
+
+  const editNoteContent = () => {
+    selectedNoteContent()
+    enableEditContentMode()
   }
 
   const addNoteF = () => {
@@ -126,32 +126,38 @@ const Header = ({
   return (
     <div className={classes.appBarStyle}>
       <div className={classes.toolbarColor}>
-        <div className={classes.buttonStyles}>
-          <Button
-            disabled={!isEnabledEditDelete}
-            onClick={deleteNoteF}
-            className={classes.buttonColor}
-            variant='contained'
-            startIcon={<DeleteIcon/>}
-            size='small'
-          />
-          <Button
-            disabled={!isEnabledEditDelete}
-            onClick={clickOpenEditDialog}
-            className={classes.buttonColor}
-            variant='contained'
-            startIcon={<EditIcon/>}
-            size='small'
-          />
-          <Button
-            disabled={!isEnabledAdd}
-            onClick={clickOpenDialog}
-            className={classes.buttonColor}
-            variant='contained'
-            startIcon={<AddCommentIcon/>}
-            size='small'
-          />
-        </div>
+        <Button
+          disabled={!isEnabledEditDelete}
+          onClick={deleteNoteF}
+          className={classes.buttonStyle}
+          variant='contained'
+          startIcon={<DeleteIcon/>}
+          size='small'
+        />
+        <Button
+          disabled={!isEnabledEditDelete}
+          onClick={clickOpenEditDialog}
+          className={classes.buttonStyle}
+          variant='contained'
+          startIcon={<EditIcon/>}
+          size='small'
+        />
+        <Button
+          disabled={!isEnabledAdd}
+          onClick={clickOpenDialog}
+          className={classes.buttonStyle}
+          variant='contained'
+          startIcon={<AddCommentIcon/>}
+          size='small'
+        />
+        <Button
+          disabled={!isEnabledEditDelete}
+          onClick={editNoteContent}
+          className={classes.buttonStyle}
+          variant='contained'
+          startIcon={<NotesIcon/>}
+          size='small'
+        />
       </div>
       {/* dialog window for adding new note */}
       <Dialog
@@ -246,7 +252,9 @@ Header.propTypes = {
   deleteNote: PropTypes.func.isRequired,
   openNoteEditDialogState: PropTypes.bool.isRequired,
   selectNoteTitleAndDate: PropTypes.func.isRequired,
-  disableEditContentMode: PropTypes.func.isRequired
+  disableEditContentMode: PropTypes.func.isRequired,
+  enableEditContentMode: PropTypes.func.isRequired,
+  selectedNoteContent: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
@@ -270,7 +278,9 @@ const mapDispatchToProps = {
   editNote,
   deleteNote,
   selectNoteTitleAndDate,
-  disableEditContentMode
+  disableEditContentMode,
+  enableEditContentMode,
+  selectedNoteContent
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header)

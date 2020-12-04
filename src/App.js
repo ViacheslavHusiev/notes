@@ -4,7 +4,7 @@ import FoldersList from './components/foldersList'
 import NotesList from './components/notesList'
 import NotesContent from './components/notesContent'
 import { makeStyles } from '@material-ui/core/styles'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -13,16 +13,15 @@ const useStyles = makeStyles(() => ({
     margin: 0,
     padding: 0,
     background: '#eeeeee',
-    ['@media (max-width: 768px)']: { // eslint-disable-line no-useless-computed-key
-      minWidth: '320px'
+    '@media (max-width: 768px)': { // eslint-disable-line no-useless-computed-key
+      minWidth: '320px',
+      minHeight: '520px'
     }
   },
   desk: {
     height: '94vh',
-    margin: 0,
-    padding: 0
-  },
-  container: {
+    display: 'flex',
+    flexDirection: 'row',
     margin: 0,
     padding: 0
   }
@@ -30,18 +29,15 @@ const useStyles = makeStyles(() => ({
 
 const App = () => {
   const classes = useStyles()
-
+  const matchesXs = useMediaQuery('(max-width:768px)')
+  console.log(matchesXs)
   return (
     <div className={classes.root}>
       <Header/>
-      <div className={`${classes.container} container-fluid`}>
-        <div className={classes.desk}>
-          <div className='row row-no-gutters'>
-            <FoldersList/>
-            <NotesList/>
-            <NotesContent/>
-          </div>
-        </div>
+      <div className={classes.desk}>
+        <FoldersList/>
+        <NotesList/>
+        <NotesContent/>
       </div>
     </div>
   )

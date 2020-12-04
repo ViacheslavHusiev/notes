@@ -15,7 +15,7 @@ import { connect } from 'react-redux'
 const useStyles = makeStyles(() => ({
   listItem: {
     width: '100%',
-    fontSize: 60
+    fontSize: 14
   }
 }))
 

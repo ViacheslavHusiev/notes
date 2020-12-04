@@ -29,8 +29,7 @@ const useStyles = makeStyles(() => ({
     paddingTop: 10,
     color: 'gray',
     textAlign: 'center',
-    fontSize: 22,
-    flex: '1 0 auto'
+    fontSize: 22
   }
 }))
 
