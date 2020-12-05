@@ -9,7 +9,8 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import TextField from '@material-ui/core/TextField'
 import DialogActions from '@material-ui/core/DialogActions'
-import NotesIcon from '@material-ui/icons/Notes'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import {
   openNotesDialog,
   closeNotesDialog,
@@ -21,14 +22,14 @@ import {
   editNote,
   deleteNote,
   selectNoteTitleAndDate,
-  disableEditContentMode,
-  enableEditContentMode,
-  selectedNoteContent
-} from '../redux/actions'
+  disableEditContentMode
+} from '../../redux/actions'
 import Dialog from '@material-ui/core/Dialog'
 import PropTypes from 'prop-types'
 import dayjs from 'dayjs'
-import CheckIcon from '@material-ui/icons/Check'
+import {
+  Link
+} from 'react-router-dom'
 
 const useStyles = makeStyles(() => ({
   appBarStyle: {
@@ -42,18 +43,18 @@ const useStyles = makeStyles(() => ({
   },
   buttonStyle: {
     background: 'white',
+    minWidth: 10,
     marginLeft: 5,
     marginRight: 5
   }
 }))
 
-const Header = ({
+const HeaderNotesListMobile = ({
   selectedFolderId, openNotesDialog, closeNotesDialog,
   openNotesDialogState, addNote, notesTitle, setInputNoteTitle,
   resetNoteInputs, selectedNoteId, openNoteEditDialogState,
   openEditNoteDialog, closeEditNoteDialog, editNote,
-  deleteNote, selectNoteTitleAndDate, disableEditContentMode,
-  selectedNoteContent, enableEditContentMode, editContentModeState
+  deleteNote, selectNoteTitleAndDate, disableEditContentMode
 }) => {
   const classes = useStyles()
 
@@ -83,11 +84,6 @@ const Header = ({
     closeEditNoteDialog(openNoteEditDialogState)
     selectNoteTitleAndDate()
     resetNoteInputs()
-  }
-
-  const editNoteContent = () => {
-    selectedNoteContent()
-    enableEditContentMode()
   }
 
   const addNoteF = () => {
@@ -121,12 +117,18 @@ const Header = ({
   const isEnabledDialogEdit = notesTitle.length > 0
   const onChangeAddNoteDialog = e => setInputNoteTitle(e.target.value)
   const onChangeEditNoteDialog = e => setInputNoteTitle(e.target.value)
-  const isEnabledEditNote = !!selectedNoteId && editContentModeState === false
-  const isEnabledReady = !!selectedNoteId && !!editContentModeState
 
   return (
     <div className={classes.appBarStyle}>
       <div className={classes.toolbarColor}>
+        <Button
+          className={classes.buttonStyle}
+          variant='contained'
+          component={Link}
+          to='/'
+          startIcon={<ArrowBackIosIcon/>}
+          size='small'
+        />
         <Button
           disabled={!isEnabledEditDelete}
           onClick={deleteNoteF}
@@ -152,19 +154,12 @@ const Header = ({
           size='small'
         />
         <Button
-          disabled={!isEnabledEditNote}
-          onClick={editNoteContent}
+          disabled={!isEnabledEditDelete}
           className={classes.buttonStyle}
           variant='contained'
-          startIcon={<NotesIcon/>}
-          size='small'
-        />
-        <Button
-          disabled={!isEnabledReady}
-          onClick={disableEditContentMode}
-          className={classes.buttonStyle}
-          variant='contained'
-          startIcon={<CheckIcon/>}
+          component={Link}
+          to='/notesContentMobile'
+          startIcon={<ArrowForwardIosIcon/>}
           size='small'
         />
       </div>
@@ -244,10 +239,9 @@ const Header = ({
   )
 }
 
-Header.propTypes = {
+HeaderNotesListMobile.propTypes = {
   notesTitle: PropTypes.string.isRequired,
   openNotesDialogState: PropTypes.bool.isRequired,
-  notes: PropTypes.bool.isRequired,
   addNote: PropTypes.func.isRequired,
   openNotesDialog: PropTypes.func.isRequired,
   closeNotesDialog: PropTypes.func.isRequired,
@@ -262,9 +256,6 @@ Header.propTypes = {
   openNoteEditDialogState: PropTypes.bool.isRequired,
   selectNoteTitleAndDate: PropTypes.func.isRequired,
   disableEditContentMode: PropTypes.func.isRequired,
-  enableEditContentMode: PropTypes.func.isRequired,
-  selectedNoteContent: PropTypes.func.isRequired,
-  editContentModeState: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => {
@@ -273,8 +264,7 @@ const mapStateToProps = (state) => {
     openNotesDialogState: state.foldersReducer.openNotesDialogState,
     notesTitle: state.foldersReducer.notesTitle,
     selectedNoteId: state.foldersReducer.selectedNoteId,
-    openNoteEditDialogState: state.foldersReducer.openNoteEditDialogState,
-    editContentModeState: state.foldersReducer.editContentModeState
+    openNoteEditDialogState: state.foldersReducer.openNoteEditDialogState
   }
 }
 
@@ -289,9 +279,7 @@ const mapDispatchToProps = {
   editNote,
   deleteNote,
   selectNoteTitleAndDate,
-  disableEditContentMode,
-  enableEditContentMode,
-  selectedNoteContent
+  disableEditContentMode
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderNotesListMobile)

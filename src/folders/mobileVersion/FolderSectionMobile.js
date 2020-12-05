@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
-import FolderItem from './FolderItem'
+import FolderItemMobile from './FolderItemMobile'
 import { connect } from 'react-redux'
 import {
   resetInputs,
@@ -14,7 +14,7 @@ import {
   deleteFolder,
   selectFolderTitle,
   disableEditContentMode
-} from '../redux/actions'
+} from '../../redux/actions'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import DialogTitle from '@material-ui/core/DialogTitle'
@@ -33,10 +33,11 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const FoldersSection = ({
+const FoldersSectionMobile = ({
   folders, mouseX, mouseY, deleteFolder, openContextMenu, closeContextMenu,
   editFolder, openFolderEditDialog, openEditDialog, closeEditDialog, title,
-  setInputFolderTitle, selectFolderTitle, disableEditContentMode, resetInputs
+  setInputFolderTitle, selectFolderTitle, disableEditContentMode,
+  resetInputs
 }) => {
   const classes = useStyles()
   // open context menu (edit, delete)
@@ -70,7 +71,6 @@ const FoldersSection = ({
 
   const editFold = () => {
     editFolder()
-    resetInputs()
     closeEditDialog(openFolderEditDialog)
     selectFolderTitle()
   }
@@ -96,7 +96,7 @@ const FoldersSection = ({
   return (
     <div>
       <div onContextMenu={menuRightClick} >
-        <FolderItem/>
+        <FolderItemMobile/>
         {/* right click context menu to edit and delete folders */}
         <Menu
           open={mouseY !== null}
@@ -143,7 +143,7 @@ const FoldersSection = ({
   )
 }
 
-FoldersSection.propTypes = {
+FoldersSectionMobile.propTypes = {
   folders: PropTypes.array.isRequired,
   title: PropTypes.string.isRequired,
   mouseX: PropTypes.number.isRequired,
@@ -157,7 +157,8 @@ FoldersSection.propTypes = {
   deleteFolder: PropTypes.func.isRequired,
   setInputFolderTitle: PropTypes.func.isRequired,
   selectFolderTitle: PropTypes.func.isRequired,
-  disableEditContentMode: PropTypes.func.isRequired
+  disableEditContentMode: PropTypes.func.isRequired,
+  resetInputs: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
@@ -183,4 +184,4 @@ const mapDispatchToProps = {
   disableEditContentMode
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FoldersSection)
+export default connect(mapStateToProps, mapDispatchToProps)(FoldersSectionMobile)

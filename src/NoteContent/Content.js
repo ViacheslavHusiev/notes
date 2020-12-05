@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
     fontSize: 14
   },
   quill: {
-    height: '82vh',
+    height: '80vh',
     toolbar: 'position: fixed;'
   },
   selectedNoteContent: {
@@ -79,10 +79,7 @@ const Content = ({
       </div>
     )
   }
-
-  return (
-    <div/>
-  )
+  return null
 }
 
 Content.propTypes = {

@@ -23,10 +23,16 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     color: 'gray',
     textAlign: 'center',
-    fontSize: 12
+    fontSize: 12,
+    '@media (max-width: 768px)': { // eslint-disable-line no-useless-computed-key
+      fontSize: 22
+    }
   },
   listItemText: {
-    fontSize: 14
+    fontSize: 14,
+    '@media (max-width: 768px)': { // eslint-disable-line no-useless-computed-key
+      fontSize: 22
+    }
   }
 }))
 

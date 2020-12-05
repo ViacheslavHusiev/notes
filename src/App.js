@@ -5,6 +5,7 @@ import NotesList from './components/notesList'
 import NotesContent from './components/notesContent'
 import { makeStyles } from '@material-ui/core/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
+import AppMobile from './components/mobileVersion/AppMobile'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -13,10 +14,7 @@ const useStyles = makeStyles(() => ({
     margin: 0,
     padding: 0,
     background: '#eeeeee',
-    '@media (max-width: 768px)': { // eslint-disable-line no-useless-computed-key
-      minWidth: '320px',
-      minHeight: '520px'
-    }
+    minHeight: '520px'
   },
   desk: {
     height: '94vh',
@@ -30,15 +28,21 @@ const useStyles = makeStyles(() => ({
 const App = () => {
   const classes = useStyles()
   const matchesXs = useMediaQuery('(max-width:768px)')
-  console.log(matchesXs)
   return (
-    <div className={classes.root}>
-      <Header/>
-      <div className={classes.desk}>
-        <FoldersList/>
-        <NotesList/>
-        <NotesContent/>
-      </div>
+    <div>
+      {matchesXs === true
+
+        ? <AppMobile/>
+
+        : <div className={classes.root}>
+          <Header/>
+          <div className={classes.desk}>
+            <FoldersList/>
+            <NotesList/>
+            <NotesContent/>
+          </div>
+        </div>
+      }
     </div>
   )
 }
