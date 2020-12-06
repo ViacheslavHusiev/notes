@@ -45,7 +45,7 @@ const NoteItem = ({
 
   return (
     <div className={classes.notes}>
-      {notes.map((note) => {
+      {notes.map((note, i) => {
         const onClick = () => {
           setActiveNoteId(note.id)
           selectNoteTitleAndDate()
@@ -66,6 +66,7 @@ const NoteItem = ({
               component="content"
               aria-label="secondary mailbox folder"
               direction='row'
+              key={i}
             >
               <ListItem
                 button
@@ -79,10 +80,9 @@ const NoteItem = ({
                     classes={{
                       primary: classes.listItemText
                     }}
-                    container
                     primary={note.title}
                   />
-                  <Typography className={classes.dateStyle} container>
+                  <Typography className={classes.dateStyle}>
                     {`${note.lastEditShortDate}`}
                   </Typography>
                 </div>

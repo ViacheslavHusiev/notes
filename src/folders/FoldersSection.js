@@ -146,8 +146,8 @@ const FoldersSection = ({
 FoldersSection.propTypes = {
   folders: PropTypes.array.isRequired,
   title: PropTypes.string.isRequired,
-  mouseX: PropTypes.number.isRequired,
-  mouseY: PropTypes.number.isRequired,
+  mouseX: PropTypes.number,
+  mouseY: PropTypes.number,
   openContextMenu: PropTypes.func.isRequired,
   closeContextMenu: PropTypes.func.isRequired,
   editFolder: PropTypes.func.isRequired,

@@ -247,7 +247,6 @@ const Header = ({
 Header.propTypes = {
   notesTitle: PropTypes.string.isRequired,
   openNotesDialogState: PropTypes.bool.isRequired,
-  notes: PropTypes.bool.isRequired,
   addNote: PropTypes.func.isRequired,
   openNotesDialog: PropTypes.func.isRequired,
   closeNotesDialog: PropTypes.func.isRequired,

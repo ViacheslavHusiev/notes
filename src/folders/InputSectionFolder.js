@@ -42,7 +42,7 @@ const InputSectionFolder = ({
   const clickCloseDialog = () => {
     closeDialog(openFolderDialog)
   }
-  //переп
+
   const addFold = () => {
     if (title.trim()) {
       addFolder({
