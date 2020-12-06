@@ -34,7 +34,8 @@ const useStyles = makeStyles(() => ({
     toolbar: 'position: fixed;'
   },
   selectedNoteContent: {
-    marginLeft: '10px'
+    marginLeft: '10px',
+    wordWrap: 'break-word'
   }
 }))
 

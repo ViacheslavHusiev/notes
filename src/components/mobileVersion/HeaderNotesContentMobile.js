@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'center',
     alignItems: 'center',
     background: 'linear-gradient(#f5f5f5, #e0e0e0);',
-    minHeight: '30px'
+    minHeight: '50px'
   },
   buttonStyle: {
     background: 'white',
