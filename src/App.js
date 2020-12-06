@@ -19,9 +19,7 @@ const useStyles = makeStyles(() => ({
   desk: {
     height: '94vh',
     display: 'flex',
-    flexDirection: 'row',
-    margin: 0,
-    padding: 0
+    flexDirection: 'row'
   }
 }))
 

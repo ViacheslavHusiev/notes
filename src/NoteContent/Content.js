@@ -31,7 +31,8 @@ const useStyles = makeStyles(() => ({
   },
   quill: {
     height: '80vh',
-    toolbar: 'position: fixed;'
+    toolbar: 'position: fixed;',
+    wordWrap: 'break-word'
   },
   selectedNoteContent: {
     marginLeft: '10px',
