@@ -8,13 +8,8 @@ import 'swiper/swiper-bundle.css'
 
 const useStyles = makeStyles(() => ({
   root: {
-    margin: 0,
-    padding: 0,
-    background: '#eeeeee',
-    '@media (max-width: 768px)': { // eslint-disable-line no-useless-computed-key
-      minWidth: '320px',
-      minHeight: '520px'
-    }
+    minWidth: '320px',
+    minHeight: '520px'
   }
 }))
 

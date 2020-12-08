@@ -14,8 +14,6 @@ import CheckIcon from '@material-ui/icons/Check'
 const useStyles = makeStyles(() => ({
   appBarStyle: {
     display: 'flex',
-    flexDirection: 'row',
-    height: '6vh',
     justifyContent: 'center',
     alignItems: 'center',
     background: 'linear-gradient(#f5f5f5, #e0e0e0);',
