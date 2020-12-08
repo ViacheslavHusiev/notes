@@ -7,12 +7,12 @@ const useStyles = makeStyles(() => ({
     backgroundColor: '#f5f5f5',
     flexDirection: 'column',
     display: 'flex',
-    height: '94vh',
     marginLeft: 2,
     marginRight: 2,
     overflow: 'auto',
     flex: '1 0 auto',
-    maxWidth: '300px'
+    maxWidth: '300px',
+    maxHeight: '96vh'
   }
 }))
 

@@ -9,8 +9,6 @@ import {
   selectedNoteContent
 } from '../../redux/actions'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import CheckIcon from '@material-ui/icons/Check'
 
 const useStyles = makeStyles(() => ({
@@ -41,20 +39,12 @@ const HeaderNotesContentMobile = ({
     enableEditContentMode()
   }
 
-  const isEnabledEdit = !!selectedNoteId && editContentModeState === false
+  const isEnabledEdit = !!selectedNoteId && !editContentModeState
   const isEnabledReady = !!selectedNoteId && !!editContentModeState
 
   return (
     <div className={classes.appBarStyle}>
       <div className={classes.toolbarColor}>
-        <Button
-          className={classes.buttonStyle}
-          variant='contained'
-          component={Link}
-          to='/notesListMobile'
-          startIcon={<ArrowBackIosIcon/>}
-          size='small'
-        />
         <Button
           disabled={!isEnabledEdit}
           onClick={editNoteContent}

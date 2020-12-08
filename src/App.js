@@ -5,7 +5,7 @@ import NotesList from './components/notesList'
 import NotesContent from './components/notesContent'
 import { makeStyles } from '@material-ui/core/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import AppMobile from './components/mobileVersion/AppMobile'
+import AppMobile from './AppMobile'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -14,12 +14,12 @@ const useStyles = makeStyles(() => ({
     margin: 0,
     padding: 0,
     background: '#eeeeee',
-    minHeight: '520px'
+    minHeight: '520px',
+    height: '100vh'
   },
   desk: {
-    height: '94vh',
-    display: 'flex',
-    flexDirection: 'row'
+    flex: '1 0 auto',
+    display: 'flex'
   }
 }))
 
@@ -28,7 +28,7 @@ const App = () => {
   const matchesXs = useMediaQuery('(max-width:768px)')
   return (
     <div>
-      {matchesXs === true
+      {matchesXs
 
         ? <AppMobile/>
 

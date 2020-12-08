@@ -33,12 +33,11 @@ import CheckIcon from '@material-ui/icons/Check'
 const useStyles = makeStyles(() => ({
   appBarStyle: {
     display: 'flex',
-    flexDirection: 'row',
-    height: '6vh',
     justifyContent: 'center',
     alignItems: 'center',
     background: 'linear-gradient(#f5f5f5, #e0e0e0);',
-    minHeight: '30px'
+    minHeight: '35px',
+    maxHeight: '50px'
   },
   buttonStyle: {
     background: 'white',
@@ -121,7 +120,7 @@ const Header = ({
   const isEnabledDialogEdit = notesTitle.length > 0
   const onChangeAddNoteDialog = e => setInputNoteTitle(e.target.value)
   const onChangeEditNoteDialog = e => setInputNoteTitle(e.target.value)
-  const isEnabledEditNote = !!selectedNoteId && editContentModeState === false
+  const isEnabledEditNote = !!selectedNoteId && !editContentModeState
   const isEnabledReady = !!selectedNoteId && !!editContentModeState
 
   return (
@@ -212,7 +211,9 @@ const Header = ({
       >
         <DialogTitle
           id="form-note-edit-dialog-title"
-        >Edit note name</DialogTitle>
+        >
+          Edit note name
+        </DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -237,7 +238,9 @@ const Header = ({
             disabled={!isEnabledDialogEdit}
             onClick={editNoteF}
             color="primary"
-          >Edit</Button>
+          >
+            Edit
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

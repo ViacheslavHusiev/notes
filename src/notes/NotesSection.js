@@ -37,7 +37,9 @@ const NotesSection = ({ selectedFolderTitle }) => {
     <div>
       <div className={classes.selectedFolder}>
         <Typography className={classes.selectedFolderText} >
-          <span>{selectedFolderTitleHeader()}</span>
+          <span>
+            {selectedFolderTitleHeader()}
+          </span>
         </Typography>
       </div>
       <div className={classes.notes}>

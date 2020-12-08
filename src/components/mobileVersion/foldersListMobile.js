@@ -1,6 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import FoldersSectionMobile from '../../folders/mobileVersion/FolderSectionMobile'
+import FoldersSection from '../../folders/FoldersSection'
 import InputSectionFolder from '../../folders/InputSectionFolder'
 import HeaderFolderListMobile from './HeaderFolderListMobile'
 
@@ -26,7 +26,7 @@ const FoldersListMobile = () => {
     <div className={classes.root}>
       <div className={classes.folderSection}>
         <HeaderFolderListMobile/>
-        <FoldersSectionMobile/>
+        <FoldersSection/>
       </div>
       <InputSectionFolder/>
     </div>

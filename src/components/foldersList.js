@@ -6,12 +6,12 @@ import FoldersSection from '../folders/FoldersSection'
 const useStyles = makeStyles(() => ({
   root: {
     backgroundColor: '#f5f5f5',
-    height: '94vh',
     display: 'flex',
     flexDirection: 'column',
     overflow: 'auto',
     flex: '1 0 auto',
-    maxWidth: '200px'
+    maxWidth: '200px',
+    maxHeight: '96vh'
   },
   folderSection: {
     overflow: 'auto',

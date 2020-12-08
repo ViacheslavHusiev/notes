@@ -16,6 +16,12 @@ const useStyles = makeStyles(() => ({
   listItem: {
     width: '100%',
     fontSize: 14
+  },
+  listItemText: {
+    '@media (max-width: 768px)': {
+      marginLeft: 15,
+      fontSize: 30
+    }
   }
 }))
 
@@ -52,7 +58,7 @@ const FolderItem = ({
             onContextMenu={onContextClick}
           >
             <ListItemText classes={{
-              primary: classes.listItem
+              primary: classes.listItemText
             }} primary={folder.title}/>
           </ListItem>
         )

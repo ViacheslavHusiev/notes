@@ -24,13 +24,13 @@ const useStyles = makeStyles(() => ({
     textAlign: 'center',
     fontSize: 12,
     '@media (max-width: 768px)': { // eslint-disable-line no-useless-computed-key
-      fontSize: 22
+      fontSize: 24
     }
   },
   listItemText: {
     fontSize: 14,
     '@media (max-width: 768px)': { // eslint-disable-line no-useless-computed-key
-      fontSize: 22
+      fontSize: 24
     }
   }
 }))

@@ -9,8 +9,6 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import TextField from '@material-ui/core/TextField'
 import DialogActions from '@material-ui/core/DialogActions'
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import {
   openNotesDialog,
   closeNotesDialog,
@@ -27,9 +25,6 @@ import {
 import Dialog from '@material-ui/core/Dialog'
 import PropTypes from 'prop-types'
 import dayjs from 'dayjs'
-import {
-  Link
-} from 'react-router-dom'
 
 const useStyles = makeStyles(() => ({
   appBarStyle: {
@@ -43,7 +38,6 @@ const useStyles = makeStyles(() => ({
   },
   buttonStyle: {
     background: 'white',
-    minWidth: 10,
     marginLeft: 5,
     marginRight: 5
   }
@@ -122,14 +116,6 @@ const HeaderNotesListMobile = ({
     <div className={classes.appBarStyle}>
       <div className={classes.toolbarColor}>
         <Button
-          className={classes.buttonStyle}
-          variant='contained'
-          component={Link}
-          to='/'
-          startIcon={<ArrowBackIosIcon/>}
-          size='small'
-        />
-        <Button
           disabled={!isEnabledEditDelete}
           onClick={deleteNoteF}
           className={classes.buttonStyle}
@@ -151,15 +137,6 @@ const HeaderNotesListMobile = ({
           className={classes.buttonStyle}
           variant='contained'
           startIcon={<AddCommentIcon/>}
-          size='small'
-        />
-        <Button
-          disabled={!isEnabledEditDelete}
-          className={classes.buttonStyle}
-          variant='contained'
-          component={Link}
-          to='/notesContentMobile'
-          startIcon={<ArrowForwardIosIcon/>}
           size='small'
         />
       </div>
@@ -255,7 +232,7 @@ HeaderNotesListMobile.propTypes = {
   deleteNote: PropTypes.func.isRequired,
   openNoteEditDialogState: PropTypes.bool.isRequired,
   selectNoteTitleAndDate: PropTypes.func.isRequired,
-  disableEditContentMode: PropTypes.func.isRequired,
+  disableEditContentMode: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {

@@ -10,6 +10,10 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 const useStyles = makeStyles(() => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
   selectedNoteText: {
     display: 'flex',
     flexDirection: 'column',
@@ -30,13 +34,14 @@ const useStyles = makeStyles(() => ({
     fontSize: 14
   },
   quill: {
-    height: '80vh',
     toolbar: 'position: fixed;',
-    wordWrap: 'break-word'
+    wordWrap: 'break-word',
+    height: '82vh'
   },
   selectedNoteContent: {
     marginLeft: '10px',
-    wordWrap: 'break-word'
+    wordWrap: 'break-word',
+    maxHeight: '82vh'
   }
 }))
 
@@ -47,7 +52,7 @@ const Content = ({
   const classes = useStyles()
 
   const selectedNoteTitleHeader = () => {
-    if (!!selectedNoteTitle === true) {
+    if (selectedNoteTitle) {
       return (
         <div className={classes.selectedNoteText}>
           <Typography className={classes.selectedNoteDate}>
@@ -63,9 +68,9 @@ const Content = ({
 
   if (selectedNoteId) {
     return (
-      <div>
+      <div className={classes.root}>
         {selectedNoteTitleHeader()}
-        {editContentModeState === true
+        {editContentModeState
           ? <ReactQuill
             className={classes.quill}
             theme='snow'

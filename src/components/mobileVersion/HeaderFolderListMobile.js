@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import { connect } from 'react-redux'
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import {
   disableEditContentMode,
   setInputFolderTitle,
@@ -12,9 +11,6 @@ import {
   deleteFolder
 } from '../../redux/actions'
 import PropTypes from 'prop-types'
-import {
-  Link
-} from 'react-router-dom'
 
 const useStyles = makeStyles(() => ({
   appBarStyle: {
@@ -51,7 +47,7 @@ const HeaderFolderListMobile = ({
     openEditDialog(openFolderEditDialog)
   }
 
-  const isEnabledButton = !!selectedFolderId
+  const isEnabledButton = selectedFolderId
   return (
     <div className={classes.appBarStyle}>
       <div className={classes.toolbarColor}>
@@ -71,15 +67,6 @@ const HeaderFolderListMobile = ({
           startIcon={<EditIcon/>}
           size='small'
         />
-        <Button
-          disabled={!isEnabledButton}
-          component={Link}
-          to='/notesListMobile'
-          className={classes.buttonStyle}
-          variant='contained'
-          startIcon={<ArrowForwardIosIcon/>}
-          size='small'
-        />
       </div>
     </div>
   )
@@ -91,8 +78,8 @@ HeaderFolderListMobile.propTypes = {
   deleteFolder: PropTypes.func.isRequired,
   setInputFolderTitle: PropTypes.func.isRequired,
   disableEditContentMode: PropTypes.func.isRequired,
-  selectedFolderId: PropTypes.string.isRequired,
-  selectedFolderTitle: PropTypes.string.isRequired
+  selectedFolderId: PropTypes.string,
+  selectedFolderTitle: PropTypes.string
 }
 
 const mapStateToProps = (state) => {

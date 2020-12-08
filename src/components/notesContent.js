@@ -7,9 +7,9 @@ const useStyles = makeStyles(() => ({
     backgroundColor: '#f5f5f5',
     flexDirection: 'column',
     display: 'flex',
-    height: '94vh',
     overflow: 'auto',
-    flex: '1 0 40%'
+    flex: '1 0 40%',
+    maxHeight: '96vh'
   }
 }))
 

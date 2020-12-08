@@ -102,9 +102,14 @@ const FoldersSection = ({
           open={mouseY !== null}
           onClose={menuClose}
           anchorReference="anchorPosition"
-          anchorPosition={anchorPositionFunc}>
-          <MenuItem onClick={openEditDialogF}>Edit</MenuItem>
-          <MenuItem onClick={deleteFold}>Delete</MenuItem>
+          anchorPosition={anchorPositionFunc}
+        >
+          <MenuItem onClick={openEditDialogF}>
+            Edit
+          </MenuItem>
+          <MenuItem onClick={deleteFold}>
+            Delete
+          </MenuItem>
         </Menu>
       </div>
       {/* dialog window for adding new folder */}
@@ -113,7 +118,9 @@ const FoldersSection = ({
         onClose={closeEditDialogF}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Edit folder name</DialogTitle>
+        <DialogTitle id="form-dialog-title">
+          Edit folder name
+        </DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -157,7 +164,8 @@ FoldersSection.propTypes = {
   deleteFolder: PropTypes.func.isRequired,
   setInputFolderTitle: PropTypes.func.isRequired,
   selectFolderTitle: PropTypes.func.isRequired,
-  disableEditContentMode: PropTypes.func.isRequired
+  disableEditContentMode: PropTypes.func.isRequired,
+  resetInputs: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
