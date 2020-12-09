@@ -14,12 +14,13 @@ const useStyles = makeStyles(() => ({
     margin: 0,
     padding: 0,
     background: '#eeeeee',
-    minHeight: '520px',
     height: '100vh'
   },
   desk: {
     flex: '1 0 auto',
-    display: 'flex'
+    display: 'flex',
+    maxHeight: 'calc(100vh-50px)',
+    minHeight: '470px'
   }
 }))
 
