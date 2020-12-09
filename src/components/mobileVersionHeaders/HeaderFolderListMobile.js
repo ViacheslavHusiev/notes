@@ -54,17 +54,19 @@ const HeaderFolderListMobile = ({
           onClick={deleteFold}
           className={classes.buttonStyle}
           variant='contained'
-          startIcon={<DeleteIcon/>}
           size='small'
-        />
+        >
+          <DeleteIcon />
+        </Button>
         <Button
           disabled={!isEnabledButton}
           onClick={openEditDialogF}
           className={classes.buttonStyle}
           variant='contained'
-          startIcon={<EditIcon/>}
           size='small'
-        />
+        >
+          <EditIcon/>
+        </Button>
       </div>
     </div>
   )

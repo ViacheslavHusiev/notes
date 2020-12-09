@@ -48,17 +48,19 @@ const HeaderNotesContentMobile = ({
           onClick={editNoteContent}
           className={classes.buttonStyle}
           variant='contained'
-          startIcon={<NotesIcon/>}
           size='small'
-        />
+        >
+          <NotesIcon/>
+        </Button>
         <Button
           disabled={!isEnabledReady}
           onClick={disableEditContentMode}
           className={classes.buttonStyle}
           variant='contained'
-          startIcon={<CheckIcon/>}
           size='small'
-        />
+        >
+          <CheckIcon/>
+        </Button>
       </div>
     </div>
   )

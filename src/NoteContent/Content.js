@@ -17,8 +17,9 @@ const useStyles = makeStyles(() => ({
   selectedNoteText: {
     display: 'flex',
     flexDirection: 'column',
-    overflow: 'auto',
-    whiteSpace: 'wrap'
+    minHeight: '60px',
+    whiteSpace: 'wrap',
+    justifyContent: 'center'
   },
   selectedNoteTitle: {
     color: 'black',
@@ -36,12 +37,12 @@ const useStyles = makeStyles(() => ({
   quill: {
     toolbar: 'position: fixed;',
     wordWrap: 'break-word',
-    height: '82vh'
+    maxHeight: 'calc(100vh - 190px)'
   },
   selectedNoteContent: {
     marginLeft: '10px',
     wordWrap: 'break-word',
-    maxHeight: '82vh'
+    maxHeight: 'calc(100vh - 190px)'
   }
 }))
 

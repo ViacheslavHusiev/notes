@@ -118,25 +118,28 @@ const HeaderNotesListMobile = ({
           onClick={deleteNoteF}
           className={classes.buttonStyle}
           variant='contained'
-          startIcon={<DeleteIcon/>}
           size='small'
-        />
+        >
+          <DeleteIcon/>
+        </Button>
         <Button
           disabled={!isEnabledEditDelete}
           onClick={clickOpenEditDialog}
           className={classes.buttonStyle}
           variant='contained'
-          startIcon={<EditIcon/>}
           size='small'
-        />
+        >
+          <EditIcon/>
+        </Button>
         <Button
           disabled={!isEnabledAdd}
           onClick={clickOpenDialog}
           className={classes.buttonStyle}
           variant='contained'
-          startIcon={<AddCommentIcon/>}
           size='small'
-        />
+        >
+          <AddCommentIcon/>
+        </Button>
       </div>
       {/* dialog window for adding new note */}
       <Dialog
