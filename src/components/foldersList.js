@@ -11,7 +11,7 @@ const useStyles = makeStyles(() => ({
     overflow: 'auto',
     flex: '1 0 auto',
     maxWidth: '200px',
-    maxHeight: '96vh'
+    maxHeight: '94vh'
   },
   folderSection: {
     overflow: 'auto',

@@ -9,7 +9,7 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     overflow: 'auto',
     flex: '1 0 40%',
-    maxHeight: '96vh'
+    maxHeight: '94vh'
   }
 }))
 
