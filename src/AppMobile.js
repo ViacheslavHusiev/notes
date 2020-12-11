@@ -14,15 +14,16 @@ import HeaderNotesContentMobile
 import Content from './NoteContent/Content'
 
 const useStyles = makeStyles(() => ({
+  swiper: {
+    minWidth: '320px'
+  },
   sectionOnMobile: {
     backgroundColor: '#f5f5f5',
     height: '100vh',
     display: 'flex',
     flexDirection: 'column',
     overflow: 'auto',
-    flex: '1 0 auto',
-    minWidth: '320px',
-    minHeight: '520px'
+    flex: '1 0 auto'
   },
   folderSection: {
     overflow: 'auto',
@@ -35,6 +36,7 @@ const AppMobile = () => {
 
   return (
     <Swiper
+      className={classes.swiper}
       spaceBetween={10}
       slidesPerView={1}
     >
