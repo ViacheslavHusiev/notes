@@ -11,8 +11,7 @@ const useStyles = makeStyles(() => ({
     marginRight: 2,
     overflow: 'auto',
     flex: '1 0 auto',
-    maxWidth: '300px',
-    maxHeight: '94vh'
+    maxWidth: '300px'
   }
 }))
 

@@ -37,12 +37,12 @@ const useStyles = makeStyles(() => ({
   quill: {
     toolbar: 'position: fixed;',
     wordWrap: 'break-word',
-    maxHeight: 'calc(100vh - 190px)'
+    height: 'calc(100vh - 160px)'
   },
   selectedNoteContent: {
     marginLeft: '10px',
     wordWrap: 'break-word',
-    maxHeight: 'calc(100vh - 190px)'
+    maxHeight: 'calc(100vh - 160px)'
   }
 }))
 

@@ -19,8 +19,8 @@ const useStyles = makeStyles(() => ({
   desk: {
     flex: '1 0 auto',
     display: 'flex',
-    maxHeight: 'calc(100vh-50px)',
-    minHeight: '470px'
+    minHeight: '470px',
+    height: 'calc(100vh - 55px)'
   }
 }))
 

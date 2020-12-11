@@ -8,8 +8,7 @@ const useStyles = makeStyles(() => ({
     flexDirection: 'column',
     display: 'flex',
     overflow: 'auto',
-    flex: '1 0 40%',
-    maxHeight: '94vh'
+    flex: '1 0 40%'
   }
 }))
 
