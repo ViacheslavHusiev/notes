@@ -35,7 +35,8 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const NoteItem = ({ item, selectedFolderId, selectedNoteId, setActiveNoteId,
+const NoteItem = ({
+  item, selectedFolderId, selectedNoteId, setActiveNoteId,
   selectNoteTitleAndDate, selectedNoteContent, disableEditContentMode,
   enableEditContentMode
 }) => {

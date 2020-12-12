@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const NotesSection = ({notes, selectedFolderTitle }) => {
+const NotesSection = ({ notes, selectedFolderTitle }) => {
   const classes = useStyles()
 
   const selectedFolderTitleHeader = () => {

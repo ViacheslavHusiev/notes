@@ -25,8 +25,9 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const FolderItem = ({ item, selectedFolderId, disableEditContentMode,
-  resetActiveNoteId, selectFolderTitle, setActiveFolderId, setInputFolderTitle
+const FolderItem = ({
+  item, selectedFolderId, disableEditContentMode, resetActiveNoteId,
+  selectFolderTitle, setActiveFolderId, setInputFolderTitle
 }) => {
   const classes = useStyles()
 
