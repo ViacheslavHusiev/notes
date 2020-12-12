@@ -95,8 +95,15 @@ const FoldersSection = ({
 
   return (
     <div>
-      <div onContextMenu={menuRightClick} >
-        <FolderItem/>
+      <div onContextMenu={menuRightClick}>
+        <div>
+          {folders.map((folder) => (
+            <FolderItem
+              key={folder.id}
+              item={folder}
+            />
+          ))}
+        </div>
         {/* right click context menu to edit and delete folders */}
         <Menu
           open={mouseY !== null}

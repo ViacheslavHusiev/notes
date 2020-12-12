@@ -11,8 +11,11 @@ import PropTypes from 'prop-types'
 
 const useStyles = makeStyles(() => ({
   root: {
+    backgroundColor: '#f5f5f5',
+    flexDirection: 'column',
     display: 'flex',
-    flexDirection: 'column'
+    overflow: 'auto',
+    flex: '1 0 40%'
   },
   selectedNoteText: {
     display: 'flex',

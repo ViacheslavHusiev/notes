@@ -25,50 +25,41 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const FolderItem = ({
-  setActiveFolderId, selectedFolderId, resetActiveNoteId,
-  disableEditContentMode, setInputFolderTitle, selectFolderTitle,
-  folders
+const FolderItem = ({ item, selectedFolderId, disableEditContentMode,
+  resetActiveNoteId, selectFolderTitle, setActiveFolderId, setInputFolderTitle
 }) => {
   const classes = useStyles()
 
+  const onClick = () => {
+    resetActiveNoteId()
+    setActiveFolderId(item.id)
+    selectFolderTitle()
+    disableEditContentMode()
+  }
+  const onContextClick = () => {
+    setActiveFolderId(item.id)
+    setInputFolderTitle(item.title)
+    selectFolderTitle()
+    disableEditContentMode()
+  }
   return (
-    <div>
-      {folders.map((folder) => {
-        const onClick = () => {
-          resetActiveNoteId()
-          setActiveFolderId(folder.id)
-          selectFolderTitle()
-          disableEditContentMode()
-        }
-        const onContextClick = () => {
-          setActiveFolderId(folder.id)
-          setInputFolderTitle(folder.title)
-          selectFolderTitle()
-          disableEditContentMode()
-        }
-        return (
-          <ListItem
-            key={folder.id}
-            className={classes.listItem}
-            button
-            role='button'
-            onClick={onClick}
-            selected={folder.id === selectedFolderId}
-            onContextMenu={onContextClick}
-          >
-            <ListItemText classes={{
-              primary: classes.listItemText
-            }} primary={folder.title}/>
-          </ListItem>
-        )
-      })}
-    </div>
+    <ListItem
+      className={classes.listItem}
+      button
+      role='button'
+      onClick={onClick}
+      selected={item.id === selectedFolderId}
+      onContextMenu={onContextClick}
+    >
+      <ListItemText classes={{
+        primary: classes.listItemText
+      }} primary={item.title}/>
+    </ListItem>
   )
 }
 
 FolderItem.propTypes = {
-  folders: PropTypes.array.isRequired,
+  item: PropTypes.object.isRequired,
   setInputFolderTitle: PropTypes.func.isRequired,
   selectFolderTitle: PropTypes.func.isRequired,
   resetActiveNoteId: PropTypes.func.isRequired,

@@ -23,79 +23,72 @@ const useStyles = makeStyles(() => ({
     color: 'gray',
     textAlign: 'center',
     fontSize: 12,
-    '@media (max-width: 768px)': { // eslint-disable-line no-useless-computed-key
+    '@media (max-width: 768px)': {
       fontSize: 24
     }
   },
   listItemText: {
     fontSize: 14,
-    '@media (max-width: 768px)': { // eslint-disable-line no-useless-computed-key
+    '@media (max-width: 768px)': {
       fontSize: 24
     }
   }
 }))
 
-const NoteItem = ({
-  notes, selectedFolderId, selectedNoteId, setActiveNoteId,
+const NoteItem = ({ item, selectedFolderId, selectedNoteId, setActiveNoteId,
   selectNoteTitleAndDate, selectedNoteContent, disableEditContentMode,
   enableEditContentMode
 }) => {
   const classes = useStyles()
 
-  return (
-    <div className={classes.notes}>
-      {notes.map((note, i) => {
-        const onClick = () => {
-          setActiveNoteId(note.id)
-          selectNoteTitleAndDate()
-          selectedNoteContent()
-          disableEditContentMode()
-        }
+  const onClick = () => {
+    setActiveNoteId(item.id)
+    selectNoteTitleAndDate()
+    selectedNoteContent()
+    disableEditContentMode()
+  }
 
-        const onDoubleClick = () => {
-          setActiveNoteId(note.id)
-          selectNoteTitleAndDate()
-          selectedNoteContent()
-          enableEditContentMode()
-        }
+  const onDoubleClick = () => {
+    setActiveNoteId(item.id)
+    selectNoteTitleAndDate()
+    selectedNoteContent()
+    enableEditContentMode()
+  }
 
-        if (selectedFolderId === note.masterFolder) {
-          return (
-            <List
-              component="content"
-              aria-label="secondary mailbox folder"
-              direction='row'
-              key={i}
-            >
-              <ListItem
-                button
-                selected={note.id === selectedNoteId}
-                onClick={onClick}
-                onDoubleClick={onDoubleClick}
-              >
-                <div className={classes.list}>
-                  <ListItemText
-                    className={classes.noteTitleStyle}
-                    classes={{
-                      primary: classes.listItemText
-                    }}
-                    primary={note.title}
-                  />
-                  <Typography className={classes.dateStyle}>
-                    {`${note.lastEditShortDate}`}
-                  </Typography>
-                </div>
-              </ListItem>
-            </List>
-          )
-        }
-      })}
-    </div>
-  )
+  if (selectedFolderId === item.masterFolder) {
+    return (
+      <List
+        component="content"
+        aria-label="secondary mailbox folder"
+        direction='row'
+      >
+        <ListItem
+          button
+          selected={item.id === selectedNoteId}
+          onClick={onClick}
+          onDoubleClick={onDoubleClick}
+        >
+          <div className={classes.list}>
+            <ListItemText
+              className={classes.noteTitleStyle}
+              classes={{
+                primary: classes.listItemText
+              }}
+              primary={item.title}
+            />
+            <Typography className={classes.dateStyle}>
+              {`${item.lastEditShortDate}`}
+            </Typography>
+          </div>
+        </ListItem>
+      </List>
+    )
+  }
+  return null
 }
 
 NoteItem.propTypes = {
-  notes: PropTypes.array.isRequired,
+  item: PropTypes.object.isRequired,
   selectedFolderId: PropTypes.string.isRequired,
   selectedNoteId: PropTypes.string.isRequired,
   selectedNoteContent: PropTypes.func.isRequired,

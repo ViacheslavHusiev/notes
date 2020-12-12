@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const NotesSection = ({ selectedFolderTitle }) => {
+const NotesSection = ({notes, selectedFolderTitle }) => {
   const classes = useStyles()
 
   const selectedFolderTitleHeader = () => {
@@ -43,19 +43,26 @@ const NotesSection = ({ selectedFolderTitle }) => {
         </Typography>
       </div>
       <div className={classes.notes}>
-        <NoteItem />
+        {notes.map((note) => (
+          <NoteItem
+            key={note.id}
+            item={note}
+          />
+        ))}
       </div>
     </div>
   )
 }
 
 NotesSection.propTypes = {
-  selectedFolderTitle: PropTypes.string.isRequired
+  selectedFolderTitle: PropTypes.string.isRequired,
+  notes: PropTypes.array.isRequired
 }
 
 const mapStateToProps = (state) => {
   return {
-    selectedFolderTitle: state.foldersReducer.selectedFolderTitle
+    selectedFolderTitle: state.foldersReducer.selectedFolderTitle,
+    notes: state.foldersReducer.notes
   }
 }
 
